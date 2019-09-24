@@ -16,7 +16,8 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="emp_fk" jdbcType="INTEGER" property="empFk" />
   </resultMap>
-  
+
+<!--  基本项目展示查询-->
   <resultMap id="rs1" type="com.offcn.beans.project.Project" extends="BaseResultMap">
       <association property="customer" javaType= "com.offcn.beans.customer.Customer">
           <result column="coname" property="comname"></result>
@@ -53,6 +54,25 @@
         order by endtime desc
     </if>
 </select>
+
+<!--有或没有需求的项目查询-->
+  <select id="getHasOrNoNeedPro" parameterType="int" resultMap="BaseResultMap">
+    select * from project
+    <where>
+      <if test="_parameter==0">
+        <!--查询没有需求的项目-->
+        pid not in(select id from analysis)
+      </if>
+      <if test="_parameter==1">
+        <!--查询有需求的项目-->
+        pid in(select id from analysis)
+      </if>
+      <if test="_parameter==2">
+        <!--查询有需求的项目-->
+        1=1
+      </if>
+    </where>
+  </select>
 
   <sql id="Example_Where_Clause">
     <where>

@@ -2,6 +2,7 @@ package com.offcn.service.project;
 
 import com.github.pagehelper.PageInfo;
 import com.offcn.beans.employee.Employee;
+import com.offcn.beans.project.Analysis;
 import com.offcn.beans.project.Project;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface ProjectService {
     int updatePro(Project project);
 
     int savePro(Project project);
+
+    List<Project> getNoNeedPro(int flag);
+
+    PageInfo<Analysis> getAnPage(int pageNum, Map map);
 }

@@ -16,10 +16,10 @@ body
 
 </head>
 <frameset rows="60,*" cols="*" frameborder="no" border="0" framespacing="0">
-  <frame src="top.jsp" name="topFrame" scrolling="no">
+  <frame src="${pageContext.request.contextPath}/top.jsp" name="topFrame" scrolling="no">
   <frameset cols="180,*" name="btFrame" frameborder="NO" border="0" framespacing="0">
-    <frame src="menu.jsp" noresize name="menu" scrolling="yes">
-    <frame src="main.jsp" noresize name="main" scrolling="yes">
+    <frame src="${pageContext.request.contextPath}/menu.jsp" noresize name="menu" scrolling="yes">
+    <frame src="${pageContext.request.contextPath}/main.jsp" noresize name="main" scrolling="yes">
   </frameset>
 </frameset>
 <noframes>

@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.offcn.beans.employee.Employee;
 import com.offcn.beans.employee.EmployeeExample;
+import com.offcn.beans.project.Analysis;
 import com.offcn.beans.project.Project;
 import com.offcn.dao.employee.EmployeeMapper;
+import com.offcn.dao.project.AnalysisMapper;
 import com.offcn.dao.project.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectMapper projectMapper;
     @Autowired
     EmployeeMapper employeeMapper;
+    @Autowired
+    AnalysisMapper analysisMapper;
     @Override
     public PageInfo<Project> getPage(int pageNum, Map map) {
         PageHelper.startPage(pageNum, 3);
@@ -44,5 +48,19 @@ public class ProjectServiceImpl implements ProjectService {
     public int savePro(Project project) {
 
         return projectMapper.updateByPrimaryKeySelective(project);
+    }
+
+    @Override
+    public List<Project> getNoNeedPro(int flag) {
+        projectMapper.getHasOrNoNeedPro(flag);
+        return null;
+    }
+
+    @Override
+    public PageInfo<Analysis> getAnPage(int pageNum, Map map) {
+        PageHelper.startPage(pageNum, 2);
+        List<Analysis> plist = analysisMapper.getByPage(map);
+        PageInfo<Analysis> info = new PageInfo<>(plist);
+        return info;
     }
 }
