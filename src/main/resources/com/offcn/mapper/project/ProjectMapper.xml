@@ -30,7 +30,7 @@
     FROM project p,customer c,employee e
     <where>
       p.comname=c.id and p.emp_fk=e.eid
-      <if test="keword!=null and keyword!=''">
+      <if test="keyword!=null and keyword!=''">
         <if test="cid==0">
           and e.ename like '%${keyword}%' or p.pname like '%${keyword}%'
         </if>

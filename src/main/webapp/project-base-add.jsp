@@ -101,7 +101,7 @@
             <td align="right" bgcolor="#FAFAF1" height="22">项目经理：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-                <select id="emp" name="empFk1">
+                <select id="emp" name="empFk">
                     <option>选择技术负责人</option>
                 </select>
             </td>

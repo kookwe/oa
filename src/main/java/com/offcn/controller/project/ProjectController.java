@@ -54,6 +54,10 @@ public class ProjectController {
         return  "project-base";
     }
 
+    /**
+     * 项目添加页面异步加载下拉框内容
+     * @return
+     */
     @RequestMapping("getProDet")
     @ResponseBody
     public Map getProDet(){
@@ -82,4 +86,11 @@ public class ProjectController {
         }
 
     }
+
+    @RequestMapping("getById")
+    public String getById(Model model,int pid){
+
+        return "project-base-edit";
+    }
+
 }
