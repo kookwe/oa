@@ -29,5 +29,8 @@ public interface ProjectMapper {
     int updateByPrimaryKeySelective(Project record);
 
     int updateByPrimaryKey(Project record);
+
     List<Project> getByPage(Map map);
+
+    List<Project> getHasOrNoNeedPro(int flag);
 }

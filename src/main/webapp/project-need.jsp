@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
     <title>需求分析管理</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css">
+
 </head>
 <body leftmargin="8" topmargin="8" background='skin/images/allbg.gif'>
 
