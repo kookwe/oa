@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/cache
+                           http://www.springframework.org/schema/cache/spring-cache.xsd"
+                           >
+    
+    <context:component-scan base-package="com.offcn">
+       <!-- 去除控制层controller的扫描 -->
+       <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+    
+    <!-- 引入数据源的配置文件 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--实例化数据源  -->
+	 <bean id="ds" class="com.alibaba.druid.pool.DruidDataSource">
+		 <!-- 数据库基本信息配置 -->
+		 <property name="url" value="${url}" />
+		 <property name="username" value="${jdbc_username}" />
+		 <property name="password" value="${jdbc_password}" />
+		 <property name="driverClassName" value="${driverClassName}" />
+		 <!-- 最大并发连接数 -->
+		 <property name="maxActive" value="${maxActive}" />
+		 <!-- 初始化连接数量 -->
+		 <property name="initialSize" value="${initialSize}"/>
+		 <!-- 配置获取连接等待超时的时间 -->
+		 <property name="maxWait" value="${maxWait}" />
+		 <!-- 最小空闲连接数 -->
+		 <property name="minIdle" value="${minIdle}" />
+	</bean>
+	
+	
+	
+	<!-- 实例化SqlSessionFactory -->
+	<bean id="sf" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="configLocation" value="classpath:MybConfig.xml"></property>
+	<property name="dataSource" ref="ds"></property>
+	<property name="mapperLocations" value="classpath:com/offcn/mapper/*/*.xml"></property>
+	<property name="plugins">
+		<array>
+			<bean class="com.github.pagehelper.PageInterceptor">
+				<property name="properties">
+					<value>helperDialect=mysql</value>
+				</property>
+			</bean>
+		</array>
+	</property>
+</bean>
+	
+
+	
+	<!-- mapper代理对象(dao层实现类)的批量实例化 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	   <!-- 设置dao层接口所在的包名 -->
+	   <property name="basePackage" value="com.offcn.dao.*"></property>
+	</bean>
+	
+	
+	<!-- 实例化事务的切面类(依赖数据源) -->
+	<bean id="tx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="ds"></property>
+	</bean>
+	<!-- 定义事务通知 -->
+	<tx:advice id="myadvice" transaction-manager="tx">
+	    <tx:attributes>
+	        <tx:method name="*" isolation="DEFAULT" propagation="REQUIRED" read-only="true"/>
+	        <tx:method name="save*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+	        <tx:method name="upd*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+	        <tx:method name="del*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+	    </tx:attributes>
+	</tx:advice>
+	<aop:config>
+	   <aop:pointcut expression="execution( * com.offcn.*.service.*.*(..))" id="pid"/>
+	<aop:advisor advice-ref="myadvice" pointcut-ref="pid"/>
+</aop:config>
+	
+</beans>

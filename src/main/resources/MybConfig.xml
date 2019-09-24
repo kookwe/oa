@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <!--mybatis-3-config.dtd:约束规范，限定当前xml文件能够写哪些节点  -->
+<configuration>
+   
+   
+   <settings>
+      <!-- 启用延迟加载 -->
+      <setting name="lazyLoadingEnabled" value="true"/>
+   </settings>
+   
+   <typeAliases>
+      <!-- 批量起别名，该包下的所有实体类类型都有别名，默认别名是类名或者将类名首字母小写例如:User/user -->
+      <package name="com.offcn.beans"/>
+      <!--<package name="com.offcn.b.bean"/>
+      <package name="com.offcn.c.bean"/>-->
+   </typeAliases>
+
+
+
+</configuration>
