@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.offcn.beans.customer.Customer;
 import com.offcn.beans.employee.Employee;
 import com.offcn.beans.project.Analysis;
+import com.offcn.beans.project.Module;
 import com.offcn.beans.project.Project;
 import com.offcn.service.customer.CustomerService;
 import com.offcn.service.project.ProjectService;
@@ -156,5 +157,19 @@ public class ProjectController {
         analysis.setUpdatetime(new Date());
         projectService.saveAna(analysis);
         return "redirect:../project-need.jsp";
+    }
+
+    @RequestMapping("getAnaByPid")
+    @ResponseBody
+    public Analysis getAnaByPid(int pid){
+        Analysis analysis = projectService.getAnaByPid(pid);
+        return analysis;
+    }
+
+    @RequestMapping("saveMod")
+    public String saveMod(Module module,String pidname){
+        String[] str = pidname.split(",");
+
+        return "";
     }
 }

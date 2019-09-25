@@ -26,4 +26,6 @@ public interface ProjectService {
 
 
     int saveAna(Analysis analysis);
+
+    Analysis getAnaByPid(int pid);
 }

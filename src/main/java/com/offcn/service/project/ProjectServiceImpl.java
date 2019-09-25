@@ -74,5 +74,11 @@ public class ProjectServiceImpl implements ProjectService {
     return analysisMapper.insertSelective(analysis);
     }
 
+    @Override
+    public Analysis getAnaByPid(int pid) {
+
+        return analysisMapper.selectByPrimaryKey(pid);
+    }
+
 
 }

@@ -7,33 +7,33 @@
     <link rel="stylesheet" type="text/css" href="skin/css/base.css">
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script type="text/javascript">
-        //加载页面时触发的事件
+        //加载页面时触发的事件,获取有需求的项目
         $(function () {
             $.ajax({
-                url: 'pro/getUnAnaPros?flag=1',
+                url: 'pro/getNoNeedPro?flag=1',
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
                     $.each(data, function (index) {
-                        $("#pro").append("<option value='" + data[index].pid + "_" + data[index].pname + "'>" + data[index].pname + "</option>");
+                        $("#pro").append("<option value='" + data[index].pid + "," + data[index].pname + "'>" + data[index].pname + "</option>");
                     })
                 }
             });
         })
-
-        function getAnaByPro(pidName) {
+        function getAnaByPro(pidAndPname) {
+            var pidname=pidAndPname.split(",");
             $("#anid").empty();
-            var pid=pidName.split("_")[0];
+            //获取项目对应的需求
             $.ajax({
-                url:'pro/getAnaByPid',
+                url:'pro/getAnaByPid?pid='+pidname[0],
                 type:'post',
-                data:{"pid":pid},
                 dataType:'json',
                 success:function (data) {
-                    $("#anid").append("<option value='"+data.id+"'>"+data.title+"</option>");
+                    $("#anid").append("<option value='"+data.id+"'>"+data.title+"</option>")
                 }
             });
         }
+
         
         function commit() {
             $("#form4").submit();
@@ -69,7 +69,7 @@
             <td align="right" bgcolor="#FAFAF1" height="22">选择项目：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-                <select id="pro" name="proname" onchange="getAnaByPro(this.value)">
+                <select id="pro" name="pidname" onchange="getAnaByPro(this.value)">
                 <option value=0>选择项目</option>
                 </select>
             </td>
