@@ -17,10 +17,13 @@ public interface ProjectService {
     int updatePro(Project project);
 
     int savePro(Project project);
+    Project getById(int pid);
+    //////////////////////////////////需求///////////////////////////////////////
 
     List<Project> getNoNeedPro(int flag);
 
-    PageInfo<Analysis> getAnPage(int pageNum, Map map);
+    PageInfo<Analysis> getAnPage(int pageNum,Map map);
 
-    Project getById(int pid);
+
+    int saveAna(Analysis analysis);
 }

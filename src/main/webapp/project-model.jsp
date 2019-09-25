@@ -19,7 +19,7 @@
     当前位置:项目管理>>模块管理
  </td>
   <td>
-    <input type='button' class="coolbg np" onClick="location='../project-model-add.jsp';" value='添加新模块' />
+    <input type='button' class="coolbg np" onClick="location='${pageContext.request.contextPath}/project-model-add.jsp';" value='添加新模块' />
  </td>
  </tr>
 </table>

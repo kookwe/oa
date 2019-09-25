@@ -21,7 +21,7 @@
                         当前位置:项目管理>>需求分析管理
                     </td>
                     <td>
-                        <input type='button' class="coolbg np" onClick="location='../project-need-add.jsp';"
+                        <input type='button' class="coolbg np" onClick="location='${pageContext.request.contextPath}/project-need-add.jsp';"
                                value='添加新项目需求'/>
                     </td>
                 </tr>
@@ -31,7 +31,7 @@
 </table>
 
 <!--  搜索表单  -->
-<form name='form3' action='${pageContext.request.contextPath}/pro/analist' method='get' id="tj">
+<form name='form3' action='${pageContext.request.contextPath}/pro/getAlist' method='get' id="tj">
     <input type='hidden' name='dopost' value=''/>
     <table width='98%' border='0' cellpadding='1' cellspacing='1' bgcolor='#CBD8AC' align="center"
            style="margin-top:8px">
@@ -41,26 +41,26 @@
                     <tr>
                         <td width='90' align='center'>搜索条件：</td>
                         <td width='160'>
-                            <input type="hidden" name="pageNO" id="pg">
-                            <select name='cid' style='width:150'>
+                            <input type="hidden" name="pageNum" id="pg">
+                            <select name='cid' style='width:150px'>
                                 <option value='0'
-                                        <c:if test="${ty==0}">selected</c:if> >选择类型...
+                                        <c:if test="${cid==0}">selected</c:if> >选择类型...
                                 </option>
-                                <option value='1' <c:if test="${ty==1}">selected</c:if>>项目名称</option>
-                                <option value='2' <c:if test="${ty==2}">selected</c:if>>标题</option>
+                                <option value='1' <c:if test="${cid==1}">selected</c:if>>项目名称</option>
+                                <option value='2' <c:if test="${cid==2}">selected</c:if>>标题</option>
                             </select>
                         </td>
                         <td width='70'>
                             关键字：
                         </td>
                         <td width='160'>
-                            <input type='text' name='keyword' value='${kw}' style='width:120px'/>
+                            <input type='text' name='keyword' value='${keyword}' style='width:120px'/>
                         </td>
                         <td width='110'>
                             <select name='orderby' style='width:120px'>
                                 <option value='0'>排序...</option>
-                                <option value='1' <c:if test="${ob==1}">selected</c:if>>添加时间</option>
-                                <option value='2' <c:if test="${ob==2}">selected</c:if>>修改时间</option>
+                                <option value='1' <c:if test="${orderby==1}">selected</c:if>>添加时间</option>
+                                <option value='2' <c:if test="${orderby==2}">selected</c:if>>修改时间</option>
                             </select>
                         </td>
                         <td>
@@ -91,7 +91,7 @@
             <td width="10%">操作</td>
         </tr>
 
-        <c:forEach items="${alist}" var="a">
+        <c:forEach items="${info.list}" var="a">
             <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
                 <td><input name="id" type="checkbox" id="id" value="${a.id}" class="np"></td>
@@ -118,9 +118,9 @@
                 <script type="text/javascript" src="${pageContext.request.contextPath}/static/page/jquery.pagination.js"></script>
                 <script type="text/javascript">
                     //初始化分页组件
-                    var count =${count};
-                    var size =${size};
-                    var pageNO =${pageNO};
+                    var count =${info.total};
+                    var size =${info.pageSize};
+                    var pageNO =${info.pageNum};
                     //alert(count+"==="+size+"==="+pageNO);
                     $("#pager").pagination(count, {
                         items_per_page: size,
