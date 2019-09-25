@@ -33,7 +33,7 @@
       p.comname=c.id and p.emp_fk=e.eid
       <if test="keyword!=null and keyword!=''">
         <if test="cid==0">
-          and e.ename like '%${keyword}%' or p.pname like '%${keyword}%'
+          and (e.ename like '%${keyword}%' or p.pname like '%${keyword}%')
         </if>
           <if test="cid==1">
               and p.pname like '%${keyword}%'

@@ -120,26 +120,26 @@
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/pro/getById?pid=${p.pid}">编辑</a> |
-                    <a href="pro/getById?pid=${p.pid}&flag=1">查看详情</a>
+                    <a href="${pageContext.request.contextPath}/pro/getById?pid=${p.pid}&flag=1">查看详情</a>
                 </td>
             </tr>
         </c:forEach>
         <tr>
             <td colspan="12">
-                <div id="pager" style="width:20%;float:right">
+                <%--<div id="pager" style="width:20%;float:right">--%>
+                <div id="pager" style="pgwidth:20%;float:right">
                 </div>
-                <link href="${pageContext.request.contextPath}/static/page/pagination.css" type="text/css"
-                      rel="stylesheet"/>
+                <link href="${pageContext.request.contextPath}/static/page/pagination.css" type="text/css" rel="stylesheet"/>
                 <script type="text/javascript"
                         src="${pageContext.request.contextPath}/static/page/jquery-1.10.2.min.js"></script>
                 <script type="text/javascript"
                         src="${pageContext.request.contextPath}/static/page/jquery.pagination.js"></script>
                 <script type="text/javascript">
                     //初始化分页组件
-                    var count =${info.total};
-                    var size =${info.pageSize};
-                    var pageNO =${info.pageNum};
-                    //alert(count+"==="+size+"==="+pageNO);
+                    var count =${info.total};//总页数
+                    var size =${info.pageSize};//每页的条数
+                    var pageNO =${info.pageNum};//当前页
+                    // alert(count+"==="+size+"==="+pageNO);
                     $("#pager").pagination(count, {
                         items_per_page: size,
                         current_page: pageNO - 1,
@@ -152,7 +152,7 @@
 
                     //点击上一页和下一页回调方法
                     function handlePaginationClick(new_page_index, pagination_container) {
-                        //location.href="<c:url value="/cus"/>?pageNum="+(new_page_index+1);
+
                         $("#pg").val(new_page_index + 1);
                         $("#tj").submit();
                     }

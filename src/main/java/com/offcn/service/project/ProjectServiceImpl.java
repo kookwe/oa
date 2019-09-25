@@ -40,27 +40,39 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public int updatePro(Project project) {
+    public int savePro(Project project) {
         return projectMapper.insertSelective(project);
     }
 
     @Override
-    public int savePro(Project project) {
+    public int updatePro(Project project) {
 
         return projectMapper.updateByPrimaryKeySelective(project);
     }
 
     @Override
+    public Project getById(int pid) {
+        return projectMapper.selectByPrimaryKey(pid);
+    }
+/////////////////////////////////需求分析管理/////////////////////////////////////////
+    @Override
     public List<Project> getNoNeedPro(int flag) {
-        projectMapper.getHasOrNoNeedPro(flag);
-        return null;
+
+        return projectMapper.getHasOrNoNeedPro(flag);
     }
 
     @Override
-    public PageInfo<Analysis> getAnPage(int pageNum, Map map) {
-        PageHelper.startPage(pageNum, 2);
-        List<Analysis> plist = analysisMapper.getByPage(map);
-        PageInfo<Analysis> info = new PageInfo<>(plist);
+    public PageInfo<Analysis> getAnPage(int pageNum,Map map) {
+        PageHelper.startPage(pageNum, 3);
+        List<Analysis> alist = analysisMapper.getAnPage(map);
+        PageInfo<Analysis> info = new PageInfo<>(alist);
         return info;
     }
+
+    @Override
+    public int saveAna(Analysis analysis) {
+    return analysisMapper.insertSelective(analysis);
+    }
+
+
 }

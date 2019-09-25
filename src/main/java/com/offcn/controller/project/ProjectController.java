@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.awt.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.awt.SystemColor.info;
 
 @Controller
 @RequestMapping("pro")
@@ -92,12 +96,27 @@ public class ProjectController {
     }
 
     @RequestMapping("getById")
-    public String getById(Model model, int pid) {
+    public String getById(Model model, int pid,@RequestParam(defaultValue = "0") int flag) {
+        Project project = projectService.getById(pid);
+        model.addAttribute("project", project);
 
+        if(flag!=0){
+            return "project-base-look";
+        }
         return "project-base-edit";
     }
 
     ////////////////////////////////////////需求/////////////////////////////////////////////
+
+    /**
+     * 查询所有需求，以及根据条件搜索需求
+     * @param model
+     * @param pageNum
+     * @param cid
+     * @param keyword
+     * @param orderby
+     * @return
+     */
     @RequestMapping("getAlist")
     public String getAlist(Model model,
                            @RequestParam(defaultValue = "1") int pageNum,
@@ -110,7 +129,7 @@ public class ProjectController {
         map.put("cid", cid);
         map.put("keyword", keyword);
         map.put("orderby", orderby);
-        PageInfo<Analysis> info = projectService.getAnPage(pageNum, map);
+        PageInfo<Analysis> info = projectService.getAnPage(pageNum,map);
 
         model.addAttribute("cid", cid);
         model.addAttribute("keyword", keyword);
@@ -119,10 +138,23 @@ public class ProjectController {
         return "project-need";
     }
 
+
     @RequestMapping("getNoNeedPro")
     @ResponseBody
     public List<Project> getProNoNeed(@RequestParam(defaultValue = "0") int flag) {
         List<Project> plist = projectService.getNoNeedPro(flag);
+
         return plist;
+    }
+
+    @RequestMapping("saveAna")
+    public String saveAna(Analysis analysis,String pidandname){
+        String[] str = pidandname.split(",");
+        analysis.setId(Integer.valueOf(str[0]));
+        analysis.setProname(str[1]);
+        analysis.setAddtime(new Date()) ;
+        analysis.setUpdatetime(new Date());
+        projectService.saveAna(analysis);
+        return "redirect:../project-need.jsp";
     }
 }
