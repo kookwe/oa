@@ -92,8 +92,13 @@ public class ProjectController {
     }
 
     @RequestMapping("getById")
-    public String getById(Model model, int pid) {
+    public String getById(Model model, int pid,@RequestParam(defaultValue = "0") int flag) {
+        Project project = projectService.getById(pid);
+        model.addAttribute("project", project);
 
+        if(flag!=0){
+            return "project-base-look";
+        }
         return "project-base-edit";
     }
 

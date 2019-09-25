@@ -21,4 +21,6 @@ public interface ProjectService {
     List<Project> getNoNeedPro(int flag);
 
     PageInfo<Analysis> getAnPage(int pageNum, Map map);
+
+    Project getById(int pid);
 }

@@ -120,7 +120,7 @@
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/pro/getById?pid=${p.pid}">编辑</a> |
-                    <a href="pro/getById?pid=${p.pid}&flag=1">查看详情</a>
+                    <a href="${pageContext.request.contextPath}/pro/getById?pid=${p.pid}&flag=1">查看详情</a>
                 </td>
             </tr>
         </c:forEach>
