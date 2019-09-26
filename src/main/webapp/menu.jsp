@@ -25,8 +25,8 @@
 <ul class='sitemu' id=0>
 <li><a href='${pageContext.request.contextPath}/pro' target='main'>基本信息管理</a> </li>
 <li><a href='${pageContext.request.contextPath}/pro/getAlist' target='main'>需求分析管理</a> </li>
-<li><a href='${pageContext.request.contextPath}/project-model.jsp' target='main'>模块管理</a> </li>
-<li><a href='project-function.jsp' target='main'>功能管理</a> </li>
+<li><a href='${pageContext.request.contextPath}/pro/getModList' target='main'>模块管理</a> </li>
+<li><a href='${pageContext.request.contextPath}/pro/getFuncList' target='main'>功能管理</a> </li>
 <li><a href='attachment/showAtts' target='main'>附件管理</a> </li>
 </ul>
 </dd>

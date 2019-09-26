@@ -3,6 +3,9 @@ package com.offcn.dao.project;
 import com.offcn.beans.project.Module;
 import com.offcn.beans.project.ModuleExample;
 import java.util.List;
+import java.util.Map;
+
+import com.offcn.beans.project.ModuleView;
 import org.apache.ibatis.annotations.Param;
 
 public interface ModuleMapper {
@@ -27,4 +30,6 @@ public interface ModuleMapper {
     int updateByPrimaryKeySelective(Module record);
 
     int updateByPrimaryKey(Module record);
+
+    List<ModuleView> getModPage(Map map);
 }

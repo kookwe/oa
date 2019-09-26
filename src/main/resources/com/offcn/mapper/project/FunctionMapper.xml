@@ -12,6 +12,41 @@
     <result column="detaileddis" jdbcType="VARCHAR" property="detaileddis" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+
+<!--分页显示功能列表，根据条件查询并分页显示功能列表-->
+  <select id="getFuncPage" parameterType="int" resultType="com.offcn.beans.project.FunctionView">
+    SELECT f.*,m.modname from function f,module m
+    <where>
+      f.modele_fk=m.id
+      <if test="keyword!=null and keyword!=''">
+        <if test="cid==0">
+          and (f.proname like '%${keyword}%' or f.analysisname like '%${keyword}%' or m.modname like '%${keyword}%' or f.functionname like '%${keyword}%')
+        </if>
+        <if test="cid==1">
+          and m.proname like '%${keyword}%'
+        </if>
+        <if test="cid==2">
+          and f.analysisname like '%${keyword}%'
+        </if>
+        <if test="cid==3">
+          and m.modname like '%${keyword}%'
+        </if>
+        <if test="cid==4">
+          and f.functionname like '%${keyword}%'
+        </if>
+      </if>
+    </where>
+    <if test="orderby==0">
+      order by f.functionname desc
+    </if>
+    <if test="orderby==1">
+      order by f.simpledis desc
+    </if>
+    <if test="orderby==2">
+      order by f.detaileddis desc
+    </if>
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

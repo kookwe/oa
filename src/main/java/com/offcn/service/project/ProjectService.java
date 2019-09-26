@@ -2,8 +2,7 @@ package com.offcn.service.project;
 
 import com.github.pagehelper.PageInfo;
 import com.offcn.beans.employee.Employee;
-import com.offcn.beans.project.Analysis;
-import com.offcn.beans.project.Project;
+import com.offcn.beans.project.*;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,10 @@ public interface ProjectService {
     int updatePro(Project project);
 
     int savePro(Project project);
+
     Project getById(int pid);
+
+    List<Project> getAllpro();
     //////////////////////////////////需求///////////////////////////////////////
 
     List<Project> getNoNeedPro(int flag);
@@ -28,4 +30,12 @@ public interface ProjectService {
     int saveAna(Analysis analysis);
 
     Analysis getAnaByPid(int pid);
+    //////////////////////////////////模块管理///////////////////////////////////////
+    int saveMod(Module module);
+
+    PageInfo<ModuleView> getMoPage(int pageNum, Map map);
+
+    ////////////////////////////////////////功能管理/////////////////////////////////////////////
+
+    PageInfo<FunctionView> getFuncPage(int pageNum, Map map);
 }

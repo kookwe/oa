@@ -37,25 +37,26 @@
         <tr>
           <td width='90' align='center'>搜索条件：</td>
           <td width='160'>
-          <select name='cid' style='width:150'>
-          <option value='0'>选择类型...</option>
-          	<option value='1'>项目名称</option>
-          	<option value='2'>需求名称</option>
-          	<option value='3'>模块名称</option>
-          	<option value='4'>功能名称</option>
+              <input type="hidden" value="1" id="pg" name="pageNum">
+          <select name='cid' style='width:150px'>
+          <option value='0' <c:if test="${cid==0}">selected</c:if>>选择类型...</option>
+          	<option value='1' <c:if test="${cid=1}">selected</c:if>>项目名称</option>
+          	<option value='2' <c:if test="${cid==2}">selected</c:if>>需求名称</option>
+          	<option value='3' <c:if test="${cid==3}">selected</c:if>>模块名称</option>
+          	<option value='4' <c:if test="${cid==4}">selected</c:if>>功能名称</option>
           </select>
         </td>
         <td width='70'>
           关键字：
         </td>
         <td width='160'>
-          	<input type='text' name='keyword' value='' style='width:120px' />
+          	<input type='text' name='keyword' value='${keyword}' style='width:120px' />
         </td>
         <td width='110'>
     		<select name='orderby' style='width:120px'>
-            <option value='id'>排序...</option>
-            <option value='pubdate'>添加时间</option>
-            <option value='pubdate'>修改时间</option>
+            <option value='0' <c:if test="${orderby==0}">selected</c:if>>排序...</option>
+            <option value='1' <c:if test="${orderby==1}">selected</c:if>>简单描述</option>
+            <option value='2' <c:if test="${orderby==2}">selected</c:if>>详细描述</option>
       	</select>
         </td>
         <td>
@@ -100,7 +101,41 @@
 	<td>2015-06-03</td>
 	<td><a href="project-function-edit.jsp">编辑</a> | <a href="project-function-look.jsp">查看详情</a></td>
 </tr>
+    <tr>
+        <td colspan="10">
+            <%--<div id="pager" style="width:20%;float:right">--%>
+            <div id="pager" style="pgwidth:20%;float:right">
+            </div>
+            <link href="${pageContext.request.contextPath}/static/page/pagination.css" type="text/css" rel="stylesheet"/>
+            <script type="text/javascript"
+                    src="${pageContext.request.contextPath}/static/page/jquery-1.10.2.min.js"></script>
+            <script type="text/javascript"
+                    src="${pageContext.request.contextPath}/static/page/jquery.pagination.js"></script>
+            <script type="text/javascript">
+                //初始化分页组件
+                var count =${info.total};//总页数
+                var size =${info.pageSize};//每页的条数
+                var pageNO =${info.pageNum};//当前页
+                // alert(count+"==="+size+"==="+pageNO);
+                $("#pager").pagination(count, {
+                    items_per_page: size,
+                    current_page: pageNO - 1,
+                    next_text: "下一页",
+                    prev_text: "上一页",
+                    num_edge_entries: 2,
+                    load_first_page: false,
+                    callback: handlePaginationClick
+                });
 
+                //点击上一页和下一页回调方法
+                function handlePaginationClick(new_page_index, pagination_container) {
+
+                    $("#pg").val(new_page_index + 1);
+                    $("#tj").submit();
+                }
+            </script>
+        </td>
+    </tr>
 
 <tr bgcolor="#FAFAF1">
 <td height="28" colspan="12">

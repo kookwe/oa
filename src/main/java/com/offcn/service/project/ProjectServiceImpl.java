@@ -4,10 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.offcn.beans.employee.Employee;
 import com.offcn.beans.employee.EmployeeExample;
-import com.offcn.beans.project.Analysis;
-import com.offcn.beans.project.Project;
+import com.offcn.beans.project.*;
 import com.offcn.dao.employee.EmployeeMapper;
 import com.offcn.dao.project.AnalysisMapper;
+import com.offcn.dao.project.FunctionMapper;
+import com.offcn.dao.project.ModuleMapper;
 import com.offcn.dao.project.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class ProjectServiceImpl implements ProjectService {
     EmployeeMapper employeeMapper;
     @Autowired
     AnalysisMapper analysisMapper;
+    @Autowired
+    ModuleMapper moduleMapper;
+    @Autowired
+    FunctionMapper functionMapper;
     @Override
     public PageInfo<Project> getPage(int pageNum, Map map) {
         PageHelper.startPage(pageNum, 3);
@@ -54,7 +59,14 @@ public class ProjectServiceImpl implements ProjectService {
     public Project getById(int pid) {
         return projectMapper.selectByPrimaryKey(pid);
     }
-/////////////////////////////////需求分析管理/////////////////////////////////////////
+
+    @Override
+    public List<Project> getAllpro() {
+
+        return projectMapper.selectByExample(null);
+    }
+
+    /////////////////////////////////需求分析管理/////////////////////////////////////////
     @Override
     public List<Project> getNoNeedPro(int flag) {
 
@@ -78,6 +90,28 @@ public class ProjectServiceImpl implements ProjectService {
     public Analysis getAnaByPid(int pid) {
 
         return analysisMapper.selectByPrimaryKey(pid);
+    }
+
+    @Override
+    public int saveMod(Module module) {
+        return moduleMapper.insertSelective(module);
+    }
+
+    @Override
+    public PageInfo<ModuleView> getMoPage(int pageNum, Map map) {
+        PageHelper.startPage(pageNum, 2);
+        List<ModuleView> mlist = moduleMapper.getModPage(map);
+        PageInfo<ModuleView> info = new PageInfo<>(mlist);
+        return info;
+    }
+    ////////////////////////////////////////功能管理/////////////////////////////////////////////
+
+    @Override
+    public PageInfo<FunctionView> getFuncPage(int pageNum, Map map) {
+        PageHelper.startPage(pageNum, 2);
+        List<FunctionView> flist = functionMapper.getFuncPage(map);
+        PageInfo<FunctionView> info = new PageInfo<>(flist);
+        return info;
     }
 
 

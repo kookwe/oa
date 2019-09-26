@@ -156,7 +156,7 @@
             <td height="28" colspan=4 align=center>
                 &nbsp;
                 <a class="coolbg" onclick="commit()">保存</a>
-                <a href="project-base.jsp" class="coolbg">返回</a>
+                <a href="${pageContext.request.contextPath}/pro" class="coolbg">返回</a>
             </td>
         </tr>
     </table>

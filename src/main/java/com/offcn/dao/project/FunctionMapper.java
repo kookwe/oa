@@ -3,6 +3,9 @@ package com.offcn.dao.project;
 import com.offcn.beans.project.Function;
 import com.offcn.beans.project.FunctionExample;
 import java.util.List;
+import java.util.Map;
+
+import com.offcn.beans.project.FunctionView;
 import org.apache.ibatis.annotations.Param;
 
 public interface FunctionMapper {
@@ -27,4 +30,6 @@ public interface FunctionMapper {
     int updateByPrimaryKeySelective(Function record);
 
     int updateByPrimaryKey(Function record);
+
+    List<FunctionView> getFuncPage(Map map);
 }

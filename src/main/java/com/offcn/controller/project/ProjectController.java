@@ -3,12 +3,19 @@ package com.offcn.controller.project;
 import com.github.pagehelper.PageInfo;
 import com.offcn.beans.customer.Customer;
 import com.offcn.beans.employee.Employee;
-import com.offcn.beans.project.Analysis;
-import com.offcn.beans.project.Module;
-import com.offcn.beans.project.Project;
+import com.offcn.beans.project.*;
 import com.offcn.service.customer.CustomerService;
 import com.offcn.service.project.ProjectService;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -107,6 +116,52 @@ public class ProjectController {
         return "project-base-edit";
     }
 
+    @RequestMapping("exportExcel")
+    public ResponseEntity<byte[]> expexl() throws Exception {
+        List<Project> plist = projectService.getAllpro();
+        //创建新excel文档，07版本之前均可以这么写
+        HSSFWorkbook workBook = new HSSFWorkbook();
+        //新建工作表
+        HSSFSheet sheet = workBook.createSheet("第一页");
+        //设置单元格的高度
+        sheet.setColumnWidth(0, 2500);
+        //新建第一行
+        HSSFRow row = sheet.createRow(0);
+        //第一行中有几个字段
+        HSSFCell cell[] = new HSSFCell[4];
+        for(int i = 0; i < cell.length; i++){
+            //取第一行第一列
+            cell[i] = row.createCell(i);
+        }
+        //给第一行所有列赋值
+        cell[0].setCellValue("项目名");
+        cell[1].setCellValue("项目客户");
+        cell[2].setCellValue("姓名成本");
+        cell[3].setCellValue("备注");
+
+
+        for (int i = 0; i < plist.size(); i++) {
+            Project pro = plist.get(i);
+            HSSFRow row1 = sheet.createRow(i + 1);
+            HSSFCell cell1[] = new HSSFCell[4];
+            for(int j = 0; j < cell1.length; j++){
+                //取第一行第一列
+                cell1[j] = row1.createCell(j);
+            }
+            cell1[0].setCellValue(pro.getPname());
+            cell1[1].setCellValue(pro.getComper());
+            cell1[2].setCellValue(pro.getCost());
+            cell1[3].setCellValue(pro.getRemark());
+        }
+        File file = new File("E:\\serverfile\\cus.xls");//先在对应位置创建好空文件
+        FileOutputStream fos = new FileOutputStream(file);
+        workBook.write(fos);
+        fos.close();
+        HttpHeaders headers=new HttpHeaders();
+        headers.setContentDispositionFormData("attachment","cus.xls");
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.MULTI_STATUS.OK);
+    }
     ////////////////////////////////////////需求/////////////////////////////////////////////
 
     /**
@@ -165,11 +220,60 @@ public class ProjectController {
         Analysis analysis = projectService.getAnaByPid(pid);
         return analysis;
     }
+////////////////////////////////////模块管理/////////////////////////////////////////
+    @RequestMapping("getModList")
+    public String getModList(Model model,
+                             @RequestParam(defaultValue = "1") int pageNum,
+                             @RequestParam(defaultValue = "0") int cid,
+                             String keyword,
+                             @RequestParam(defaultValue = "0") int orderby
+    ) {
+        //用map接收参数
+        Map map = new HashMap<>();
+        map.put("cid", cid);
+        map.put("keyword", keyword);
+        map.put("orderby", orderby);
+        PageInfo<ModuleView> info = projectService.getMoPage(pageNum,map);
 
+        model.addAttribute("cid", cid);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("orderby", orderby);
+        model.addAttribute("info", info);
+        return "project-model";
+    }
+
+    /**
+     * 模块保存功能
+     * @param module
+     * @param pidname
+     * @return
+     */
     @RequestMapping("saveMod")
     public String saveMod(Module module,String pidname){
         String[] str = pidname.split(",");
+        module.setProname(str[1]);
+        projectService.saveMod(module);
+        return "redirect:../project-model.jsp";
+    }
+    ////////////////////////////////////////功能管理/////////////////////////////////////////////
+    @RequestMapping("getFuncList")
+    public String getFuncList(Model model,
+                             @RequestParam(defaultValue = "1") int pageNum,
+                             @RequestParam(defaultValue = "0") int cid,
+                             String keyword,
+                             @RequestParam(defaultValue = "0") int orderby
+    ) {
+        //用map接收参数
+        Map map = new HashMap<>();
+        map.put("cid", cid);
+        map.put("keyword", keyword);
+        map.put("orderby", orderby);
+        PageInfo<FunctionView> info = projectService.getFuncPage(pageNum,map);
 
-        return "";
+        model.addAttribute("cid", cid);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("orderby", orderby);
+        model.addAttribute("info", info);
+        return "project-function";
     }
 }

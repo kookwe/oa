@@ -7,6 +7,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
     <title>项目信息管理</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css">
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        //全选功能
+        function chooseAll() {
+            $("input[name=id]").attr("checked",true);
+        }
+       //反选功能
+        function revChoose() {
+
+        }
+    </script>
+    
 </head>
 <body leftmargin="8" topmargin="8" background='${pageContext.request.contextPath}/skin/images/allbg.gif'>
 
@@ -20,7 +32,9 @@
                         当前位置:项目管理>>基本信息管理
                     </td>
                     <td>
-                        <input type='button' class="coolbg np" onClick="location='${pageContext.request.contextPath}/project-base-add.jsp';" value='添加新项目'/>
+                        <input type='button' class="coolbg np"
+                               onClick="location='${pageContext.request.contextPath}/project-base-add.jsp';"
+                               value='添加新项目'/>
                     </td>
                 </tr>
             </table>
@@ -62,7 +76,8 @@
                             </select>
                         </td>
                         <td>
-                            &nbsp;&nbsp;&nbsp;<input name="imageField" type="submit" src="${pageContext.request.contextPath}/skin/images/frame/search.gif"
+                            &nbsp;&nbsp;&nbsp;<input name="imageField" type="submit"
+                                                     src="${pageContext.request.contextPath}/skin/images/frame/search.gif"
                                                      width="45" height="20" border="0" class="np"/>
                         </td>
                     </tr>
@@ -72,7 +87,7 @@
     </table>
 </form>
 <!--  内容列表   -->
-<form name="form2">
+<form name="form2" action="${pageContext.request.contextPath}/pro/exportExcel" method="post" enctype="multipart/form-data">
 
     <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center"
            style="margin-top:8px">
@@ -129,7 +144,8 @@
                 <%--<div id="pager" style="width:20%;float:right">--%>
                 <div id="pager" style="pgwidth:20%;float:right">
                 </div>
-                <link href="${pageContext.request.contextPath}/static/page/pagination.css" type="text/css" rel="stylesheet"/>
+                <link href="${pageContext.request.contextPath}/static/page/pagination.css" type="text/css"
+                      rel="stylesheet"/>
                 <script type="text/javascript"
                         src="${pageContext.request.contextPath}/static/page/jquery-1.10.2.min.js"></script>
                 <script type="text/javascript"
@@ -164,15 +180,15 @@
         <tr bgcolor="#FAFAF1">
             <td height="28" colspan="12">
                 &nbsp;
-                <a href="" class="coolbg">全选</a>
-                <a href="" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:chooseAll()"  class="coolbg">全选</a>
+                <a href="javascript:revChoose()" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="" class="coolbg">&nbsp;删除&nbsp;</a>
-                <a href="" class="coolbg">&nbsp;导出Excel&nbsp;</a>
+                <a href="pro/exportExcel" class="coolbg">&nbsp;导出Excel&nbsp;</a>
             </td>
         </tr>
-        <tr align="right" bgcolor="#EEF4EA">
+        <%--<tr align="right" bgcolor="#EEF4EA">
             <td height="36" colspan="12" align="center"><!--翻页代码 --></td>
-        </tr>
+        </tr>--%>
     </table>
 
 </form>

@@ -11,6 +11,39 @@
     <result column="detaileddis" jdbcType="VARCHAR" property="detaileddis" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+
+<!--分页显示模块列表或根据条件查询后分页显示的列表-->
+  <select id="getModPage" parameterType="int" resultType="com.offcn.beans.project.ModuleView">
+    SELECT m.*,a.title from module m,analysis a
+    <where>
+      m.analysis_fk=a.id
+      <if test="keyword!=null and keyword!=''">
+        <if test="cid==0">
+          and (m.proname like '%${keyword}%' or a.title like '%${keyword}%' or m.modname like '%${keyword}%')
+        </if>
+        <if test="cid==1">
+          and m.proname like '%${keyword}%'
+        </if>
+        <if test="cid==2">
+          and a.title like '%${keyword}%'
+        </if>
+        <if test="cid==3">
+          and m.modname like '%${keyword}%'
+        </if>
+      </if>
+    </where>
+    <if test="orderby==0">
+      order by m.modname desc
+    </if>
+    <if test="orderby==1">
+      order by m.simpledis desc
+    </if>
+    <if test="orderby==2">
+      order by m.detaileddis desc
+    </if>
+  </select>
+
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
