@@ -27,7 +27,7 @@
 <li><a href='${pageContext.request.contextPath}/pro/getAlist' target='main'>需求分析管理</a> </li>
 <li><a href='${pageContext.request.contextPath}/pro/getModList' target='main'>模块管理</a> </li>
 <li><a href='${pageContext.request.contextPath}/pro/getFuncList' target='main'>功能管理</a> </li>
-<li><a href='attachment/showAtts' target='main'>附件管理</a> </li>
+<li><a href='${pageContext.request.contextPath}/pro/getAttPage' target='main'>附件管理</a> </li>
 </ul>
 </dd>
 </dl>

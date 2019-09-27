@@ -11,6 +11,36 @@
     <result column="uploadtime" jdbcType="DATE" property="uploadtime" />
     <result column="updatetime" jdbcType="DATE" property="updatetime" />
   </resultMap>
+
+  <!--分页显示附件列表，根据条件查询并分页显示附件列表-->
+  <select id="getAttPage" parameterType="int" resultType="com.offcn.beans.project.AttachmentView">
+    SELECT att.*,p.pname FROM attachment att,project p
+    <where>
+      att.pro_fk=p.pid
+      <if test="keyword!=null and keyword!=''">
+        <if test="cid==0">
+          and (att.attname like '%${keyword}%' or p.pname like '%${keyword}%' )
+        </if>
+        <if test="cid==1">
+          and att.attname like '%${keyword}%'
+        </if>
+        <if test="cid==2">
+          and p.pname like '%${keyword}%'
+        </if>
+
+      </if>
+    </where>
+    <if test="orderby==0">
+      order by id desc
+    </if>
+    <if test="orderby==1">
+      order by uploadtime desc
+    </if>
+    <if test="orderby==2">
+      order by updatetime desc
+    </if>
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

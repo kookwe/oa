@@ -35,7 +35,16 @@ public interface ProjectService {
 
     PageInfo<ModuleView> getMoPage(int pageNum, Map map);
 
+    List<Module> getModByAid(int aid);
+
     ////////////////////////////////////////功能管理/////////////////////////////////////////////
 
     PageInfo<FunctionView> getFuncPage(int pageNum, Map map);
+
+
+    int saveFunction(Function function);
+
+    PageInfo<AttachmentView> getAttPage(int pageNum, Map map);
+
+    int saveAtt(Attachment attachment);
 }

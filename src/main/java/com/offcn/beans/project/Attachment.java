@@ -1,5 +1,7 @@
 package com.offcn.beans.project;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Attachment {
@@ -14,9 +16,9 @@ public class Attachment {
     private String remark;
 
     private String path;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date uploadtime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updatetime;
 
     public Integer getId() {

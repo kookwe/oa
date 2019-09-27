@@ -6,10 +6,7 @@ import com.offcn.beans.employee.Employee;
 import com.offcn.beans.employee.EmployeeExample;
 import com.offcn.beans.project.*;
 import com.offcn.dao.employee.EmployeeMapper;
-import com.offcn.dao.project.AnalysisMapper;
-import com.offcn.dao.project.FunctionMapper;
-import com.offcn.dao.project.ModuleMapper;
-import com.offcn.dao.project.ProjectMapper;
+import com.offcn.dao.project.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +24,8 @@ public class ProjectServiceImpl implements ProjectService {
     ModuleMapper moduleMapper;
     @Autowired
     FunctionMapper functionMapper;
+    @Autowired
+    AttachmentMapper attachmentMapper;
     @Override
     public PageInfo<Project> getPage(int pageNum, Map map) {
         PageHelper.startPage(pageNum, 3);
@@ -91,7 +90,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         return analysisMapper.selectByPrimaryKey(pid);
     }
-
+    /////////////////////////////////模块管理/////////////////////////////////////////
     @Override
     public int saveMod(Module module) {
         return moduleMapper.insertSelective(module);
@@ -104,6 +103,14 @@ public class ProjectServiceImpl implements ProjectService {
         PageInfo<ModuleView> info = new PageInfo<>(mlist);
         return info;
     }
+
+    @Override
+    public List<Module> getModByAid(int aid) {
+        ModuleExample example = new ModuleExample();
+        ModuleExample.Criteria criteria = example.createCriteria();
+        criteria.andAnalysisFkEqualTo(aid);
+        return moduleMapper.selectByExample(example);
+    }
     ////////////////////////////////////////功能管理/////////////////////////////////////////////
 
     @Override
@@ -112,6 +119,26 @@ public class ProjectServiceImpl implements ProjectService {
         List<FunctionView> flist = functionMapper.getFuncPage(map);
         PageInfo<FunctionView> info = new PageInfo<>(flist);
         return info;
+    }
+
+    @Override
+    public int saveFunction(Function function) {
+
+        return functionMapper.insertSelective(function);
+    }
+
+    @Override
+    public PageInfo<AttachmentView> getAttPage(int pageNum, Map map) {
+        PageHelper.startPage(pageNum, 2);
+        List<AttachmentView> attlist = attachmentMapper.getAttPage(map);
+        PageInfo<AttachmentView> info = new PageInfo<>(attlist);
+        return info;
+
+    }
+
+    @Override
+    public int saveAtt(Attachment attachment) {
+        return attachmentMapper.insertSelective(attachment);
     }
 
 

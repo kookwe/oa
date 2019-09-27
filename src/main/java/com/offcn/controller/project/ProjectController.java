@@ -21,14 +21,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static java.awt.SystemColor.info;
 
@@ -194,7 +194,11 @@ public class ProjectController {
         return "project-need";
     }
 
-
+    /**
+     * 根据传过来的参数不同，进行查询，
+     * @param flag 0为查询没有需求的项目，1为有需求的项目，2为查询所有项目
+     * @return
+     */
     @RequestMapping("getNoNeedPro")
     @ResponseBody
     public List<Project> getProNoNeed(@RequestParam(defaultValue = "0") int flag) {
@@ -211,7 +215,7 @@ public class ProjectController {
         analysis.setAddtime(new Date()) ;
         analysis.setUpdatetime(new Date());
         projectService.saveAna(analysis);
-        return "redirect:../project-need.jsp";
+        return "redirect:/pro/getAlist";
     }
 
     @RequestMapping("getAnaByPid")
@@ -253,9 +257,26 @@ public class ProjectController {
         String[] str = pidname.split(",");
         module.setProname(str[1]);
         projectService.saveMod(module);
-        return "redirect:../project-model.jsp";
+        return "redirect:/pro/getModList";
+    }
+
+    @RequestMapping("getModByAid")
+    @ResponseBody
+    public List<Module> getModByAid(int aid){
+        List<Module> mlist = projectService.getModByAid(aid);
+        return mlist;
     }
     ////////////////////////////////////////功能管理/////////////////////////////////////////////
+
+    /**
+     * 分页显示功能列表及根据条件查询后分页显示列表
+     * @param model 传输数据到页面
+     * @param pageNum
+     * @param cid
+     * @param keyword
+     * @param orderby
+     * @return
+     */
     @RequestMapping("getFuncList")
     public String getFuncList(Model model,
                              @RequestParam(defaultValue = "1") int pageNum,
@@ -275,5 +296,57 @@ public class ProjectController {
         model.addAttribute("orderby", orderby);
         model.addAttribute("info", info);
         return "project-function";
+    }
+
+    @RequestMapping("saveFunction")
+    public String saveFunction(Function function,String prname,String ananame){
+        function.setProname(prname.split(",")[1]);
+        function.setAnalysisname(ananame.split(",")[1]);
+        int i = projectService.saveFunction(function);
+        return "redirect:/pro/getFuncList";
+    }
+
+    @RequestMapping("getFuncByModId")
+    public List<Function> getFuncByModId(int modid){
+
+        return projectService.getFuncByModId(modid);
+    }
+    ////////////////////////////////////////附件管理/////////////////////////////////////////////
+    @RequestMapping("getAttPage")
+    public String getAttPage(Model model,
+                              @RequestParam(defaultValue = "1") int pageNum,
+                              @RequestParam(defaultValue = "0") int cid,
+                              String keyword,
+                              @RequestParam(defaultValue = "0") int orderby
+    ) {
+        //用map接收参数
+        Map map = new HashMap<>();
+        map.put("cid", cid);
+        map.put("keyword", keyword);
+        map.put("orderby", orderby);
+        PageInfo<AttachmentView> info = projectService.getAttPage(pageNum,map);
+
+        model.addAttribute("cid", cid);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("orderby", orderby);
+        model.addAttribute("info", info);
+        return "project-file";
+    }
+
+    @RequestMapping("saveAtt")
+    public String saveAtt(Attachment attachment,MultipartFile files){
+        String filename = UUID.randomUUID().toString().substring(24)+ files.getOriginalFilename();
+        File file = new File("E:\\serverfile\\attachment", filename);
+        try {
+            files.transferTo(file);
+
+            attachment.setPath(filename);
+            attachment.setUploadtime(new Date());
+            attachment.setUpdatetime(new Date());
+            projectService.saveAtt(attachment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/pro/getAttPage";
     }
 }

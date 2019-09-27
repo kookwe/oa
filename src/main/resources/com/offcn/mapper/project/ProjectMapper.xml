@@ -68,7 +68,7 @@
         pid in(select id from analysis)
       </if>
       <if test="_parameter==2">
-        <!--查询有需求的项目-->
+        <!--查询所有项目-->
         1=1
       </if>
     </where>
