@@ -28,4 +28,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
     }
+    //根据职位查找员工
+    @Override
+    public List<Employee> getEmpsByPos() {
+        EmployeeExample example = new EmployeeExample();
+        EmployeeExample.Criteria criteria = example.createCriteria();
+        criteria.andPFkLessThan(4);
+        return employeeMapper.selectByExample(example);
+    }
 }

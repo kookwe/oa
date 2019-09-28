@@ -141,5 +141,13 @@ public class ProjectServiceImpl implements ProjectService {
         return attachmentMapper.insertSelective(attachment);
     }
 
+    @Override
+    public List<Function> getFuncByModId(int modid) {
+        FunctionExample example = new FunctionExample();
+        FunctionExample.Criteria criteria = example.createCriteria();
+        criteria.andModeleFkEqualTo(modid);
+        return functionMapper.selectByExample(example);
+    }
+
 
 }

@@ -307,6 +307,7 @@ public class ProjectController {
     }
 
     @RequestMapping("getFuncByModId")
+    @ResponseBody
     public List<Function> getFuncByModId(int modid){
 
         return projectService.getFuncByModId(modid);

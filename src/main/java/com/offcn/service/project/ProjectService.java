@@ -47,4 +47,6 @@ public interface ProjectService {
     PageInfo<AttachmentView> getAttPage(int pageNum, Map map);
 
     int saveAtt(Attachment attachment);
+
+    List<Function> getFuncByModId(int modid);
 }

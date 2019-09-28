@@ -19,6 +19,18 @@
                     })
                 }
             });
+
+            //加载页面时查找出执行任务的员工列表
+            $.ajax({
+                url:'emp/getEmps',
+                type:'post',
+                dataType:'json',
+                success:function (data) {
+                    $.each(data,function (index) {
+                        $("#emp").append("<option value='"+data[index].eid+"'>"+data[index].ename+"</option>");
+                    })
+                }
+            });
         })
 
         function getAnaByPro(pid) {
@@ -46,6 +58,7 @@
                 }
             });
         }
+        //根据模块id查到对应的功能，并追加到功能下拉框中
         function getfunc(modid) {
 			$("#fun").html("<option value='0'>请选择功能</option>");
 			$.ajax({
@@ -53,10 +66,15 @@
 				type:"post",
 				dataType:"json",
 				success:function (data) {
-					
+                    $.each(data,function (index) {
+                        $("#fun").append("<option value='"+data[index].id+"'>"+data[index].functionname+"</option>");
+                    })
 				}
 			})
 		}
+        function commit() {
+            $("#form7").submit();
+        }
     </script>
 </head>
 <body leftmargin="8" topmargin="8" background='${pageContext.request.contextPath}/skin/images/allbg.gif'>
@@ -76,7 +94,7 @@
     </tr>
 </table>
 
-<form name="form2" id="form7" action="${pageContext.request.contextPath}/task/addInfo" method="post">
+<form name="form2" id="form7" action="${pageContext.request.contextPath}/daily/addTask" method="post">
 
     <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center"
            style="margin-top:8px">
@@ -93,7 +111,7 @@
                 <select id="anid">
                     <option value=1>请选择需求</option>
                 </select>
-                -<select id="mod" onchange="addfunc(this.value)">
+                -<select id="mod" onchange="getfunc(this.value)">
 
             </select>-
                 <select id="fun" name="funFk">
