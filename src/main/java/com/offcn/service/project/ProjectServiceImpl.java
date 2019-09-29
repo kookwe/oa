@@ -149,5 +149,21 @@ public class ProjectServiceImpl implements ProjectService {
         return functionMapper.selectByExample(example);
     }
 
+    @Override
+    public int deletePro(List<Integer> ids) {
+        ProjectExample example = new ProjectExample();
+        ProjectExample.Criteria criteria = example.createCriteria();
+        criteria.andPidIn(ids);
+        return projectMapper.deleteByExample(example);
+    }
+
+    @Override
+    public int deleteNeed(List<Integer> ids) {
+        AnalysisExample example = new AnalysisExample();
+        AnalysisExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return analysisMapper.deleteByExample(example);
+    }
+
 
 }

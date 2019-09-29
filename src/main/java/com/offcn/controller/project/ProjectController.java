@@ -162,6 +162,12 @@ public class ProjectController {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.MULTI_STATUS.OK);
     }
+
+    @RequestMapping("deletePro")
+    public String deletePro(@RequestParam(name="id") List<Integer> ids){
+        projectService.deletePro(ids);
+        return "redirect:/pro";
+    }
     ////////////////////////////////////////需求/////////////////////////////////////////////
 
     /**
@@ -223,6 +229,12 @@ public class ProjectController {
     public Analysis getAnaByPid(int pid){
         Analysis analysis = projectService.getAnaByPid(pid);
         return analysis;
+    }
+
+    @RequestMapping("deleteNeed")
+    public String deleteNeed(@RequestParam(name = "id") List<Integer> ids){
+        projectService.deleteNeed(ids);
+        return "redirect:/pro/getAlist";
     }
 ////////////////////////////////////模块管理/////////////////////////////////////////
     @RequestMapping("getModList")

@@ -8,6 +8,31 @@
     <title>需求分析管理</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css">
 
+    <script type="text/javascript">
+        //全选功能
+        function chooseAll() {
+            $("input[name=id]").each(function () { //遍历每一个复选框
+                this.checked = true; //js方法
+            });
+        }
+        //反选功能
+        function revChoose() {
+            $("input[name=id]").each(function () { //遍历每一个复选框
+                this.checked = !this.checked; //js方法
+            });
+        }
+
+        function del() {
+            var len=$("input[name=id]:checked").length;
+            //alert(len);
+            if(len>0){
+                $("#form2").submit();
+            }else{
+                alert("请选择要删除的数据！！！");
+            }
+        }
+
+    </script>
 </head>
 <body leftmargin="8" topmargin="8" background='skin/images/allbg.gif'>
 
@@ -74,7 +99,7 @@
     </table>
 </form>
 <!--  内容列表   -->
-<form name="form2">
+<form name="form2" action="${pageContext.request.contextPath}/pro/deleteNeed" method="post" enctype="multipart/form-data">
 
     <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center"
            style="margin-top:8px">
@@ -105,8 +130,8 @@
                     <fmt:formatDate value="${a.updatetime}" pattern="yyyy-MM-dd"></fmt:formatDate>
                 </td>
                 <td>
-                    <a href="../project-need-edit.jsp">编辑</a> |
-                    <a href="project-need-look.jsp">查看详情</a></td>
+                    <a href="${pageContext.request.contextPath}/project-need-edit.jsp">编辑</a> |
+                    <a href="${pageContext.request.contextPath}/project-need-look.jsp">查看详情</a></td>
             </tr>
         </c:forEach>
         <tr>
@@ -144,9 +169,9 @@
         <tr bgcolor="#FAFAF1">
             <td height="28" colspan="12">
                 &nbsp;
-                <a href="" class="coolbg">全选</a>
-                <a href="" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="" class="coolbg">&nbsp;删除&nbsp;</a>
+                <a href="javascript:chooseAll()" class="coolbg">全选</a>
+                <a href="javascript:revChoose()" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:del()" class="coolbg">&nbsp;删除&nbsp;</a>
                 <a href="" class="coolbg">&nbsp;导出Excel&nbsp;</a>
             </td>
         </tr>

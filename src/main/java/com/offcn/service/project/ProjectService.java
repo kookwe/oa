@@ -49,4 +49,8 @@ public interface ProjectService {
     int saveAtt(Attachment attachment);
 
     List<Function> getFuncByModId(int modid);
+
+    int deletePro(List<Integer> ids);
+
+    int deleteNeed(List<Integer> ids);
 }

@@ -102,7 +102,7 @@
     </table>
 </form>
 <!--  内容列表   -->
-<form id="form2" name="form2" action="${pageContext.request.contextPath}/pro/del" method="post" enctype="multipart/form-data">
+<form id="form2" name="form2" action="${pageContext.request.contextPath}/pro/deletePro" method="post" enctype="multipart/form-data">
 
     <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center"
            style="margin-top:8px">
@@ -197,7 +197,7 @@
                 &nbsp;
                 <a href="javascript:chooseAll()"  class="coolbg">全选</a>
                 <a href="javascript:revChoose()" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="delete()" class="coolbg">&nbsp;删除&nbsp;</a>
+                <a href="javascript:del()" class="coolbg">&nbsp;删除&nbsp;</a>
                 <a href="pro/exportExcel" class="coolbg">&nbsp;导出Excel&nbsp;</a>
             </td>
         </tr>
