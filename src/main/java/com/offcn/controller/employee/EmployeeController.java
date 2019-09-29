@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -16,10 +17,10 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
     @RequestMapping("login")
-    public String empLogin(Model model,String username, String password){
+    public String empLogin(Model model, String username, String password, HttpSession session){
         Employee employee = employeeService.empLogin(username,password);
         if(employee!=null){
-            model.addAttribute("emp", employee);
+            session.setAttribute("emp", employee);
             return "index";
         }else {
             model.addAttribute("msg", "账号或密码错误，请重新输入");

@@ -1,12 +1,14 @@
 package com.offcn.beans.daily;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Task {
     private Integer id;
-
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private Date starttime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endtime;
 
     private String level;

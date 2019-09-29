@@ -6,9 +6,17 @@
     <title>创建任务</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css">
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/date/WdatePicker.js"></script>
     <script type="text/javascript">
+        var dateSkin = "blue";
         //加载页面时触发的事件,获取有需求的项目
         $(function () {
+            $("#st").focus(function () {
+                WdatePicker({skin: dateSkin, readOnly: true, dateFmt: 'yyyy-MM-dd HH:mm:00'})
+            });
+            $("#et").focus(function () {
+                WdatePicker({skin: dateSkin, readOnly: true, dateFmt: 'yyyy-MM-dd HH:mm:00'})
+            });
             $.ajax({
                 url: 'pro/getNoNeedPro?flag=1',
                 type: 'post',
@@ -127,12 +135,12 @@
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">开始时间：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
-                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><input name="starttime"/></td>
+                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><input id="st" name="starttime"/></td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">结束时间：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
-                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><input name="endtime"/></td>
+                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><input id="et" name="endtime"/></td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">执行者：</td>

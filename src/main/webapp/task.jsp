@@ -34,7 +34,7 @@
       <table border='0' cellpadding='0' cellspacing='0'>
         <tr> <td width='90' align='center'>状态：</td>
           <td width='160'>
-          <select name='cid' style='width:150'>
+          <select name='cid' style='width:150px'>
           <option value='0'>请选择</option>
           	<option value='1'>未开始</option>
           	<option value='1'>进行中</option>

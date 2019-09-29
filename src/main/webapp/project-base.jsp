@@ -11,12 +11,27 @@
     <script type="text/javascript">
         //全选功能
         function chooseAll() {
-            $("input[name=id]").attr("checked",true);
+            $("input[name=id]").each(function () { //遍历每一个复选框
+                this.checked = true; //js方法
+            });
         }
        //反选功能
         function revChoose() {
-
+                $("input[name=id]").each(function () { //遍历每一个复选框
+                    this.checked = !this.checked; //js方法
+                });
         }
+
+      function del() {
+          var len=$("input[name=id]:checked").length;
+          //alert(len);
+          if(len>0){
+              $("#form2").submit();
+          }else{
+              alert("请选择要删除的数据！！！");
+          }
+      }
+
     </script>
     
 </head>
@@ -87,7 +102,7 @@
     </table>
 </form>
 <!--  内容列表   -->
-<form name="form2" action="${pageContext.request.contextPath}/pro/exportExcel" method="post" enctype="multipart/form-data">
+<form id="form2" name="form2" action="${pageContext.request.contextPath}/pro/del" method="post" enctype="multipart/form-data">
 
     <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center"
            style="margin-top:8px">
@@ -182,7 +197,7 @@
                 &nbsp;
                 <a href="javascript:chooseAll()"  class="coolbg">全选</a>
                 <a href="javascript:revChoose()" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="" class="coolbg">&nbsp;删除&nbsp;</a>
+                <a href="delete()" class="coolbg">&nbsp;删除&nbsp;</a>
                 <a href="pro/exportExcel" class="coolbg">&nbsp;导出Excel&nbsp;</a>
             </td>
         </tr>
