@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.offcn.beans.customer.Customer;
 import com.offcn.beans.employee.Employee;
 import com.offcn.beans.project.*;
+import com.offcn.dao.project.AnalysisMapper;
 import com.offcn.service.customer.CustomerService;
 import com.offcn.service.project.ProjectService;
 import org.apache.commons.io.FileUtils;
@@ -39,7 +40,8 @@ public class ProjectController {
     ProjectService projectService;
     @Autowired
     CustomerService customerService;
-
+    @Autowired
+    AnalysisMapper analysisMapper;
     /**
      * 显示项目基本信息方法
      *
@@ -136,7 +138,7 @@ public class ProjectController {
         //给第一行所有列赋值
         cell[0].setCellValue("项目名");
         cell[1].setCellValue("项目客户");
-        cell[2].setCellValue("姓名成本");
+        cell[2].setCellValue("成本");
         cell[3].setCellValue("备注");
 
 
@@ -213,14 +215,26 @@ public class ProjectController {
         return plist;
     }
 
+    /**
+     * 添加需求和编辑需求中的保存
+     * @param analysis
+     * @param pidandname
+     * @return
+     */
     @RequestMapping("saveAna")
     public String saveAna(Analysis analysis,String pidandname){
-        String[] str = pidandname.split(",");
-        analysis.setId(Integer.valueOf(str[0]));
-        analysis.setProname(str[1]);
-        analysis.setAddtime(new Date()) ;
-        analysis.setUpdatetime(new Date());
-        projectService.saveAna(analysis);
+        //如果pidandname为空则为编辑保存，否则为添加保存
+        if(pidandname==null){
+            projectService.saveUpAn(analysis);
+        }else {
+            String[] str = pidandname.split(",");
+            analysis.setId(Integer.valueOf(str[0]));
+            analysis.setProname(str[1]);
+            analysis.setAddtime(new Date()) ;
+            analysis.setUpdatetime(new Date());
+            projectService.saveAna(analysis);
+        }
+
         return "redirect:/pro/getAlist";
     }
 
@@ -230,11 +244,70 @@ public class ProjectController {
         Analysis analysis = projectService.getAnaByPid(pid);
         return analysis;
     }
+    @RequestMapping("getAnaById")
+    public String getAnaById(Model model,int aid,@RequestParam(defaultValue = "0") int flag){
 
+        Analysis analysis = projectService.getAnaById(aid);
+        model.addAttribute("analysis", analysis);
+        if(flag==1){
+            return "project-need-look";
+        }
+        return "project-need-edit";
+    }
     @RequestMapping("deleteNeed")
     public String deleteNeed(@RequestParam(name = "id") List<Integer> ids){
         projectService.deleteNeed(ids);
         return "redirect:/pro/getAlist";
+    }
+
+    @RequestMapping("exportAnExcel")
+    public ResponseEntity<byte[]> expexlAn() throws Exception {
+        List<Analysis> alist = projectService.getAllAn();
+        //创建新excel文档，07版本之前均可以这么写
+        HSSFWorkbook workBook = new HSSFWorkbook();
+        //新建工作表
+        HSSFSheet sheet = workBook.createSheet("第一页");
+        //设置单元格的高度
+        sheet.setColumnWidth(0, 2500);
+        //新建第一行
+        HSSFRow row = sheet.createRow(0);
+        //第一行中有几个字段
+        HSSFCell cell[] = new HSSFCell[5];
+        for(int i = 0; i < cell.length; i++){
+            //取第一行第一列
+            cell[i] = row.createCell(i);
+        }
+        //给第一行所有列赋值
+        cell[0].setCellValue("标题");
+        cell[1].setCellValue("项目名称");
+        cell[2].setCellValue("项目简单描述");
+        cell[3].setCellValue("项目详细描述");
+        cell[4].setCellValue("备注");
+
+
+        for (int i = 0; i < alist.size(); i++) {
+           Analysis analysis = alist.get(i);
+            HSSFRow row1 = sheet.createRow(i + 1);
+            HSSFCell cell1[] = new HSSFCell[5];
+            for(int j = 0; j < cell1.length; j++){
+                //取第一行第一列
+                cell1[j] = row1.createCell(j);
+            }
+            cell1[0].setCellValue(analysis.getTitle());
+            cell1[1].setCellValue(analysis.getProname());
+            cell1[2].setCellValue(analysis.getSimpledis());
+            cell1[3].setCellValue(analysis.getDetaileddis());
+            cell1[4].setCellValue(analysis.getRemark());
+
+        }
+        File file = new File("E:\\serverfile\\analysis.xls");//先在对应位置创建好空文件
+        FileOutputStream fos = new FileOutputStream(file);
+        workBook.write(fos);
+        fos.close();
+        HttpHeaders headers=new HttpHeaders();
+        headers.setContentDispositionFormData("attachment","analysis.xls");
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.MULTI_STATUS.OK);
     }
 ////////////////////////////////////模块管理/////////////////////////////////////////
     @RequestMapping("getModList")

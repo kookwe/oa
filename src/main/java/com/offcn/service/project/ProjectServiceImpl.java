@@ -165,5 +165,21 @@ public class ProjectServiceImpl implements ProjectService {
         return analysisMapper.deleteByExample(example);
     }
 
+    @Override
+    public Analysis getAnaById(int aid) {
+
+        return analysisMapper.selectByPrimaryKey(aid);
+    }
+
+    @Override
+    public int saveUpAn(Analysis analysis) {
+        return analysisMapper.updateByPrimaryKeySelective(analysis);
+    }
+
+    @Override
+    public List<Analysis> getAllAn() {
+        return analysisMapper.selectByExample(null);
+    }
+
 
 }

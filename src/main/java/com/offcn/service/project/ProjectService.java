@@ -53,4 +53,10 @@ public interface ProjectService {
     int deletePro(List<Integer> ids);
 
     int deleteNeed(List<Integer> ids);
+
+    Analysis getAnaById(int aid);
+
+    int saveUpAn(Analysis analysis);
+
+    List<Analysis> getAllAn();
 }

@@ -8,6 +8,31 @@
     <title>附件管理</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css">
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        //全选功能
+        function chooseAll() {
+            $("input[name=id]").each(function () { //遍历每一个复选框
+                this.checked = true; //js方法
+            });
+        }
+        //反选功能
+        function revChoose() {
+            $("input[name=id]").each(function () { //遍历每一个复选框
+                this.checked = !this.checked; //js方法
+            });
+        }
+
+        function del() {
+            var len=$("input[name=id]:checked").length;
+            //alert(len);
+            if(len>0){
+                $("#form2").submit();
+            }else{
+                alert("请选择要删除的数据！！！");
+            }
+        }
+
+    </script>
 </head>
 <body leftmargin="8" topmargin="8" background='${pageContext.request.contextPath}/skin/images/allbg.gif'>
 
@@ -142,9 +167,9 @@
         <tr bgcolor="#FAFAF1">
             <td height="28" colspan="12">
                 &nbsp;
-                <a href="" class="coolbg">全选</a>
-                <a href="" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="" class="coolbg">&nbsp;删除&nbsp;</a>
+                <a href="javascript:chooseAll()" class="coolbg">全选</a>
+                <a href="javascript:revChoose()" class="coolbg">反选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:del()" class="coolbg">&nbsp;删除&nbsp;</a>
                 <a href="${pageContext.request.contextPath}/attachment/output" class="coolbg">&nbsp;导出Excel&nbsp;</a>
             </td>
         </tr>
