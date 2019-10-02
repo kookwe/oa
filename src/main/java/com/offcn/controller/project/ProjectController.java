@@ -419,9 +419,16 @@ public class ProjectController {
         return "project-file";
     }
 
+    /**
+     * 添加附件后保存附件
+     * @param attachment
+     * @param files
+     * @return
+     */
     @RequestMapping("saveAtt")
     public String saveAtt(Attachment attachment,MultipartFile files){
         String filename = UUID.randomUUID().toString().substring(24)+ files.getOriginalFilename();
+        //先在对应位置创建好文件
         File file = new File("E:\\serverfile\\attachment", filename);
         try {
             files.transferTo(file);
@@ -434,5 +441,28 @@ public class ProjectController {
             e.printStackTrace();
         }
         return "redirect:/pro/getAttPage";
+    }
+
+    /**
+     * 下载附件
+     * @param fname 点击下载时传入
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("downAtt")
+    public ResponseEntity<byte[]> downAtt(String fname) throws IOException {
+        //得到要下载的文件,需要先创建好这个文件在对应位置
+        File f=new File("D:\\attachment\\pro",fname);
+        HttpHeaders headers=new HttpHeaders();
+        headers.setContentDispositionFormData("attachment",fname);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(f),headers,HttpStatus.OK);
+    }
+
+    @RequestMapping("getAttById")
+    @ResponseBody
+    public Attachment getAttById(int id){
+
+        return projectService.getAttById(id);
     }
 }

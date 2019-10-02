@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css">
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script type="text/javascript">
+
         //全选功能
         function chooseAll() {
             $("input[name=id]").each(function () { //遍历每一个复选框
@@ -123,8 +124,8 @@
                 </td>
                 <td><fmt:formatDate value="${att.updatetime}" pattern="yyyy-MM-dd HH-mm-ss"></fmt:formatDate>
                 </td>
-                <td><a href="${pageContext.request.contextPath}/attachment/download?path=${att.path}">下载</a> |<a
-                        href="#">删除</a> |<a href="project-file-edit.jsp">编辑</a> | <a
+                <td><a href="${pageContext.request.contextPath}/pro/downAtt?fname=${att.path}">下载</a> |<a
+                        href="#">删除</a> |<a href="${pageContext.request.contextPath}/project-file-edit.jsp?id=${att.id}">编辑</a> | <a
                         href="project-file-look.jsp">查看详情</a></td>
             </tr>
         </c:forEach>

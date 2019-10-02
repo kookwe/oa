@@ -59,4 +59,6 @@ public interface ProjectService {
     int saveUpAn(Analysis analysis);
 
     List<Analysis> getAllAn();
+
+    Attachment getAttById(int id);
 }

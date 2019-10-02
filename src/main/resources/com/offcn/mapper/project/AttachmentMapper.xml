@@ -12,6 +12,16 @@
     <result column="updatetime" jdbcType="DATE" property="updatetime" />
   </resultMap>
 
+  <resultMap id="rs" type="com.offcn.beans.project.Attachment" extends="BaseResultMap">
+    <association property="pro_fk" javaType="com.offcn.beans.project.Project">
+      <result column="pro_fk" property="proFk"/>
+    </association>
+  </resultMap>
+<!--根据id查找附件，包含项目名称-->
+  <select id="getAttById" resultMap="rs">
+select * from attachment where id = #{id}
+  </select>
+
   <!--分页显示附件列表，根据条件查询并分页显示附件列表-->
   <select id="getAttPage" parameterType="int" resultType="com.offcn.beans.project.AttachmentView">
     SELECT att.*,p.pname FROM attachment att,project p

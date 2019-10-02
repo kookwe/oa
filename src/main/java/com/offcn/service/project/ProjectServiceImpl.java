@@ -181,5 +181,11 @@ public class ProjectServiceImpl implements ProjectService {
         return analysisMapper.selectByExample(null);
     }
 
+    @Override
+    public Attachment getAttById(int id) {
+
+        return attachmentMapper.getAttById(id);
+    }
+
 
 }

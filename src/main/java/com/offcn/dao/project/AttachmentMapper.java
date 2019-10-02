@@ -32,4 +32,6 @@ public interface AttachmentMapper {
     int updateByPrimaryKey(Attachment record);
 
     List<AttachmentView> getAttPage(Map map);
+
+    Attachment getAttById(int id);
 }
