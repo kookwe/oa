@@ -33,5 +33,5 @@ public interface AttachmentMapper {
 
     List<AttachmentView> getAttPage(Map map);
 
-    Attachment getAttById(int id);
+    AttachmentView getAttById(int id);
 }

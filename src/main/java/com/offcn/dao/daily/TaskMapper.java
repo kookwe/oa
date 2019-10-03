@@ -3,6 +3,9 @@ package com.offcn.dao.daily;
 import com.offcn.beans.daily.Task;
 import com.offcn.beans.daily.TaskExample;
 import java.util.List;
+import java.util.Map;
+
+import com.offcn.beans.daily.TaskView;
 import org.apache.ibatis.annotations.Param;
 
 public interface TaskMapper {
@@ -27,4 +30,5 @@ public interface TaskMapper {
     int updateByPrimaryKeySelective(Task record);
 
     int updateByPrimaryKey(Task record);
+    List<TaskView> getTasklist(Map map);
 }

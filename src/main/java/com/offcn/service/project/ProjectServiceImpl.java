@@ -182,9 +182,22 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Attachment getAttById(int id) {
+    public AttachmentView getAttById(int id) {
 
         return attachmentMapper.getAttById(id);
+    }
+
+    @Override
+    public int updateAtt(Attachment attachment) {
+        return attachmentMapper.updateByPrimaryKeySelective(attachment);
+    }
+
+    @Override
+    public int deleteAtt(List<Integer> ids) {
+        AttachmentExample example = new AttachmentExample();
+        AttachmentExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return attachmentMapper.deleteByExample(example);
     }
 
 

@@ -1,6 +1,8 @@
 package com.offcn.controller.daily;
 
+import com.github.pagehelper.PageInfo;
 import com.offcn.beans.daily.Task;
+import com.offcn.beans.daily.TaskView;
 import com.offcn.beans.employee.Employee;
 import com.offcn.service.daily.DailyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +31,20 @@ public class DailyController {
     }
 
     @RequestMapping("getTaskList")
-    public String getTaskList(Model model,
-                              @RequestParam(defaultValue = "1") int pageNum,
-                              @RequestParam(defaultValue = "0") int cid,
-                              String keyword,
-                              @RequestParam(defaultValue = "0") int orderby
+    public String getTaskList(Model model, @RequestParam(defaultValue = "1") int pageNum,
+                              @RequestParam(defaultValue = "0")int cid,
+                              @RequestParam(defaultValue = "0")int orderby,
+                              String keyword,@RequestParam(defaultValue = "-1") int st,HttpSession session
     ) {
-        //用map接收参数
-        Map map = new HashMap<>();
-        map.put("cid", cid);
-        map.put("keyword", keyword);
-        map.put("orderby", orderby);
-
+        Employee emp= (Employee) session.getAttribute("emp");
+        Map map=new HashMap();
+        map.put("cid",cid);
+        map.put("kw",keyword);
+        map.put("ob",orderby);
+        map.put("st",st);
+        map.put("eid",emp.getEid());
+        PageInfo<TaskView> info = dailyService.getTaskPage(pageNum,map);
+       model.addAttribute("info",info);
 
 
         return "task";

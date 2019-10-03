@@ -34,7 +34,7 @@
 
 <dl class='bitem'><dt onclick=showHide('items2_1')><b>日常办公</b></dt><dd style='display:none' class='sitem' id=items2_1><ul class='sitemu' id=1>
 <li><a href='task-add.jsp' target='main'>创建任务</a> </li>
-<li><a href='task.jsp' target='main'>任务信息</a> </li>
+<li><a href='${pageContext.request.contextPath}/daily/getTaskList' target='main'>任务信息</a> </li>
 <li><a href='task-my.jsp' target='main'>我的任务</a> </li>
 <li><a href='notice.jsp' target='main'>通知公告</a></li>
 <li><a href='archives.jsp' target='main'>档案管理</a> </li>

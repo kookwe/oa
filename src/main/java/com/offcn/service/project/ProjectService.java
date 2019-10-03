@@ -60,5 +60,9 @@ public interface ProjectService {
 
     List<Analysis> getAllAn();
 
-    Attachment getAttById(int id);
+    AttachmentView getAttById(int id);
+
+    int updateAtt(Attachment attachment);
+
+    int deleteAtt(List<Integer> ids);
 }

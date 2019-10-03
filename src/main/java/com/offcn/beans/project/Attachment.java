@@ -16,9 +16,9 @@ public class Attachment {
     private String remark;
 
     private String path;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date uploadtime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     public Integer getId() {

@@ -426,17 +426,22 @@ public class ProjectController {
      * @return
      */
     @RequestMapping("saveAtt")
-    public String saveAtt(Attachment attachment,MultipartFile files){
+    public String saveAtt(Attachment attachment,MultipartFile files,@RequestParam(defaultValue = "0") int flag){
         String filename = UUID.randomUUID().toString().substring(24)+ files.getOriginalFilename();
         //先在对应位置创建好文件
         File file = new File("E:\\serverfile\\attachment", filename);
         try {
             files.transferTo(file);
-
             attachment.setPath(filename);
             attachment.setUploadtime(new Date());
             attachment.setUpdatetime(new Date());
-            projectService.saveAtt(attachment);
+            if (flag==0){
+                projectService.saveAtt(attachment);
+
+            }else{
+                projectService.updateAtt(attachment);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -459,10 +464,26 @@ public class ProjectController {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(f),headers,HttpStatus.OK);
     }
 
+    /**
+     * 编辑附件和查看详情共用
+     * @param model
+     * @param id
+     * @param flag 不传值默认跳转到编辑页面
+     * @return
+     */
     @RequestMapping("getAttById")
-    @ResponseBody
-    public Attachment getAttById(int id){
+    public String getAttById(Model model,int id,Integer flag){
+       AttachmentView attachmentView = projectService.getAttById(id);
+        model.addAttribute("att",attachmentView);
+        if(flag!=null){
+            return "project-file-look";
+        }
+        return "project-file-edit";
+    }
 
-        return projectService.getAttById(id);
+    @RequestMapping("deleteAtt")
+    public String deleteAtt(@RequestParam(name = "id") List<Integer> ids){
+        projectService.deleteAtt(ids);
+        return "redirect:/pro/getAttPage";
     }
 }

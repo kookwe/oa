@@ -14,6 +14,38 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+
+  <!--获取当前登录用户下发过的所有任务-->
+  <select id="getTasklist" parameterType="map" resultType="com.offcn.beans.daily.TaskView">
+    select t.*,e.ename  from task t,employee e
+    <where>
+      t.emp_fk=#{eid} and  t.emp_fk2=e.eid
+      <if test="keyword!=null and keyword!=''">
+        <if test="cid==0">
+          and (t.tasktitle like '%${keyword}%' or e.ename like '%${keyword}%')
+        </if>
+        <if test="cid==1">
+          and t.tasktitle like '%${keyword}%'
+        </if>
+        <if test="cid==2">
+          and e.ename like '%${keyword}%'
+        </if>
+      </if>
+      <if test="st!=-1">
+        and t.status=#{st}
+      </if>
+    </where>
+    <if test="orderby==0">
+      order by t.id asc
+    </if>
+    <if test="orderby==1">
+      order by t.starttime desc
+    </if>
+    <if test="orderby==2">
+      order by t.endtime desc
+    </if>
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

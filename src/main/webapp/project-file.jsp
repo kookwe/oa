@@ -98,7 +98,7 @@
     </table>
 </form>
 <!--  内容列表   -->
-<form name="form2">
+<form name="form2" id="form2" action="${pageContext.request.contextPath}/pro/deleteAtt">
 
     <table width="98%" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
         <tr bgcolor="#E7E7E7">
@@ -116,17 +116,17 @@
         <c:forEach items="${info.list}" var="att">
             <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-                <td><input name="id" type="checkbox" id="id" value="101" class="np"></td>
+                <td><input name="id" type="checkbox" id="id" value="${att.id}" class="np"></td>
                 <td>${att.id}</td>
                 <td>${att.attname}</td>
                 <td align="center"><a href=''><u>${att.pname}</u></a></td>
-                <td> <fmt:formatDate value="${att.uploadtime}" pattern="yyyy-MM-dd HH-mm-ss"></fmt:formatDate>
+                <td> <fmt:formatDate value="${att.uploadtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
                 </td>
-                <td><fmt:formatDate value="${att.updatetime}" pattern="yyyy-MM-dd HH-mm-ss"></fmt:formatDate>
+                <td><fmt:formatDate value="${att.updatetime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
                 </td>
                 <td><a href="${pageContext.request.contextPath}/pro/downAtt?fname=${att.path}">下载</a> |<a
-                        href="#">删除</a> |<a href="${pageContext.request.contextPath}/project-file-edit.jsp?id=${att.id}">编辑</a> | <a
-                        href="project-file-look.jsp">查看详情</a></td>
+                        href="javascript:del()">删除</a> |<a href="${pageContext.request.contextPath}/pro/getAttById?id=${att.id}">编辑</a> | <a
+                        href="${pageContext.request.contextPath}/pro/getAttById?id=${att.id}&flag=1">查看详情</a></td>
             </tr>
         </c:forEach>
 

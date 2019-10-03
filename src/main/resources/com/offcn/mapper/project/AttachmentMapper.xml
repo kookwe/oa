@@ -12,14 +12,15 @@
     <result column="updatetime" jdbcType="DATE" property="updatetime" />
   </resultMap>
 
-  <resultMap id="rs" type="com.offcn.beans.project.Attachment" extends="BaseResultMap">
-    <association property="pro_fk" javaType="com.offcn.beans.project.Project">
-      <result column="pro_fk" property="proFk"/>
+<!--  关联查询有错误方法-->
+  <!--<resultMap id="rs" type="com.offcn.beans.project.Attachment" extends="BaseResultMap">
+    <association property="project" javaType="com.offcn.beans.project.Project">
+      <result column="pname" property="pname"/>
     </association>
-  </resultMap>
+  </resultMap>-->
 <!--根据id查找附件，包含项目名称-->
-  <select id="getAttById" resultMap="rs">
-select * from attachment where id = #{id}
+  <select id="getAttById" parameterType="int" resultType="com.offcn.beans.project.AttachmentView">
+      SELECT a.*,p.pname FROM attachment a,project p WHERE id=#{id} AND a.pro_fk = p.pid
   </select>
 
   <!--分页显示附件列表，根据条件查询并分页显示附件列表-->
