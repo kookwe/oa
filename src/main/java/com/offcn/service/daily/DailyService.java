@@ -11,4 +11,6 @@ public interface DailyService {
 
 
     PageInfo<TaskView> getTaskPage(int pageNum, Map map);
+
+    Task getTaskById(int tid);
 }

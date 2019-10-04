@@ -142,7 +142,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Function> getFuncByModId(int modid) {
+    public List<Function> getFuncByModId(Integer modid) {
         FunctionExample example = new FunctionExample();
         FunctionExample.Criteria criteria = example.createCriteria();
         criteria.andModeleFkEqualTo(modid);
@@ -198,6 +198,16 @@ public class ProjectServiceImpl implements ProjectService {
         AttachmentExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(ids);
         return attachmentMapper.deleteByExample(example);
+    }
+
+    @Override
+    public Function getFunByFid(Integer funFk) {
+        return functionMapper.selectByPrimaryKey(funFk);
+    }
+
+    @Override
+    public Module getModByMid(Integer modeleFk) {
+        return moduleMapper.selectByPrimaryKey(modeleFk);
     }
 
 

@@ -28,4 +28,9 @@ public class DailyServiceImpl implements DailyService {
         PageInfo<TaskView> info = new PageInfo<>(taskViewList);
         return info;
     }
+
+    @Override
+    public Task getTaskById(int tid) {
+        return taskMapper.selectByPrimaryKey(tid);
+    }
 }
