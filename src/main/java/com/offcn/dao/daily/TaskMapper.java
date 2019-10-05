@@ -30,5 +30,8 @@ public interface TaskMapper {
     int updateByPrimaryKeySelective(Task record);
 
     int updateByPrimaryKey(Task record);
+
     List<TaskView> getTasklist(Map map);
+
+    List<TaskView> getMyTaskList(Map map);
 }

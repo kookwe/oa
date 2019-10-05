@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -89,7 +90,7 @@
             $("#fun").html("<option value='0'>请选择功能</option>");
             var funid =${task.funFk};
             $.ajax({
-                url: '${pageContext.request.contextPath}/pro/getFuncByModId?mid=' + modid,
+                url: '${pageContext.request.contextPath}/pro/getFuncByModId?modid=' + modid,
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
@@ -106,7 +107,7 @@
         }
 
         function commit() {
-            $("#form7").submit();
+            $("#form2").submit();
         }
     </script>
 </head>
@@ -127,8 +128,8 @@
     </tr>
 </table>
 
-<form name="form2">
-
+<form id="form2" name="form2" action="${pageContext.request.contextPath}/daily/editTask">
+    <input type="hidden" name="id" value="${task.id}">
     <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center"
            style="margin-top:8px">
         <tr bgcolor="#E7E7E7">
@@ -149,53 +150,56 @@
                 <option value=0>请选择模块</option>
             </select>
                 -<select id="fun">
-                <option value=1>请选择功能</option>
+                <option value=0>请选择功能</option>
             </select>
             </td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">任务标题：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
-                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><input value="${task.tasktitle}"/></td>
+                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><input name="tasktitle" value="${task.tasktitle}"/></td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">开始时间：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-                <input id="st" value="<fmt:formatDate value="${task.starttime}" pattern="yyyy-MM-dd HH:mm:ss" />"/></td>
+                <input name="starttime" id="st" value="<fmt:formatDate value="${task.starttime}" pattern="yyyy-MM-dd HH:mm:ss" />"/></td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">结束时间：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-                <input id="et" value="<fmt:formatDate value="${task.endtime}" pattern="yyyy-MM-dd HH:mm:ss" />"/>
+                <input name="endtime" id="et" value="<fmt:formatDate value="${task.endtime}" pattern="yyyy-MM-dd HH:mm:ss" />"/>
             </td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">执行者：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
-                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><select>
-                <option value=1>张含馨--初级程序员</option>
-                <option value=1>张&nbsp;&nbsp;伟--中级程序员</option>
-                <option value=1>孙传杰--项目经理</option>
+                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
+                <select id="emp" name="empFk2">
+<%--                <option value=1>张含馨--初级程序员</option>--%>
+<%--                <option value=1>张&nbsp;&nbsp;伟--中级程序员</option>--%>
+<%--                <option value=1>孙传杰--项目经理</option>--%>
             </select></td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1" height="22">优先级：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
-                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22"><select>
-                <option>高</option>
-                <option>中</option>
-                <option>低</option>
-                <option>暂缓</option>
-            </select></td>
+                onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
+                <select name="level">
+                    <option <c:if test="${task.level=='高'}">selected</c:if>>高</option>
+                <option <c:if test="${task.level=='中'}">selected</c:if>>中</option>
+                <option <c:if test="${task.level=='低'}">selected</c:if>>低</option>
+                <option <c:if test="${task.level=='暂缓'}">selected</c:if>>暂缓</option>
+            </select>
+            </td>
         </tr>
 
         <tr>
             <td align="right" bgcolor="#FAFAF1">详细说明：</td>
             <td colspan=3 align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';">
-                <textarea rows=10 cols=130>暂无</textarea>
+                <textarea name="remark" rows=10 cols=130>${task.remark}</textarea>
             </td>
         </tr>
 
@@ -203,7 +207,7 @@
         <tr bgcolor="#FAFAF1">
             <td height="28" colspan=4 align=center>
                 &nbsp;
-                <a href="task.jsp" class="coolbg">保存</a>
+                <a href="javascript:commit()" class="coolbg">保存</a>
             </td>
         </tr>
     </table>

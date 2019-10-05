@@ -65,10 +65,51 @@ public class DailyController {
     public String getTaskById(Model m,int tid){
         Task task =dailyService.getTaskById(tid);
         m.addAttribute("task",task);
-        Function fun = projectService.getFunByFid(task.getFunFk());
-        Module mod = projectService.getModByMid(fun.getModeleFk());
-        m.addAttribute("mid",mod.getId());//回显四级菜单中的模块时使用
-        m.addAttribute("aid",mod.getAnalysisFk());//回显四级菜单中的项目时使用
-        return "task-edit";
+            Function fun = projectService.getFunByFid(task.getFunFk());
+            Module mod = projectService.getModByMid(fun.getModeleFk());
+            m.addAttribute("mid",mod.getId());//回显四级菜单中的模块时使用
+            m.addAttribute("aid",mod.getAnalysisFk());//回显四级菜单中的项目时使用
+            return "task-edit";
+    }
+
+    @RequestMapping("editTask")
+    public String editTask(Task task){
+        dailyService.editTask(task);
+        return "redirect:/daily/getTaskList";
+    }
+
+    /**
+     * 查询出的任务是别人给我下发的任务
+     * @param model
+     * @param pageNum
+     * @param cid
+     * @param orderby
+     * @param st
+     * @param keyword
+     * @param session
+     * @return
+     */
+    @RequestMapping("getMyTaskList")
+    public String getMyTaskList(Model model, @RequestParam(defaultValue = "1") int pageNum,
+                             @RequestParam(defaultValue = "0")int cid,
+                             @RequestParam(defaultValue = "0")int orderby,
+                             @RequestParam(defaultValue = "0") int st,
+                             String keyword,HttpSession session){
+        Employee emp= (Employee) session.getAttribute("emp");
+        Map map=new HashMap();
+        map.put("cid",cid);
+        map.put("keyword",keyword);
+        map.put("orderby",orderby);
+        map.put("st",st);
+        map.put("eid",emp.getEid());
+        PageInfo<TaskView> info = dailyService.getMyTaskPage(pageNum, map);
+        model.addAttribute("info",info);
+        return "task-my";
+    }
+
+    @RequestMapping("updateStatus")
+    public String updateStatus(int st,int tid){
+        dailyService.updateStatus(st,tid);
+        return "redirect:/daily/getMyTaskList";
     }
 }

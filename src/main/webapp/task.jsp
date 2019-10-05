@@ -121,7 +121,7 @@
                 <td><fmt:formatDate value="${tv.starttime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                 <td><fmt:formatDate value="${tv.endtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                 <td> <a href="${pageContext.request.contextPath}/daily/getTaskById?tid=${tv.id}">编辑</a> | <a
-                        href="task-look.jsp">查看详情</a></td>
+                        href="${pageContext.request.contextPath}/daily/getTaskById?tid=${tv.id}&flag=1">查看详情</a></td>
             </tr>
         </c:forEach>
         <tr>
