@@ -2,9 +2,11 @@ package com.offcn.service.daily;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.offcn.beans.daily.Notice;
 import com.offcn.beans.daily.Task;
 import com.offcn.beans.daily.TaskExample;
 import com.offcn.beans.daily.TaskView;
+import com.offcn.dao.daily.NoticeMapper;
 import com.offcn.dao.daily.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.Map;
 public class DailyServiceImpl implements DailyService {
     @Autowired
     TaskMapper taskMapper;
+    @Autowired
+    NoticeMapper noticeMapper;
     @Override
     public int addTask(Task task) {
 
@@ -56,4 +60,15 @@ public class DailyServiceImpl implements DailyService {
         task.setId(tid);
         return taskMapper.updateByPrimaryKeySelective(task);
     }
+
+    @Override
+    public List<Notice> getLastNotice() {
+        return noticeMapper.getLastNotice();
+    }
+
+    @Override
+    public Notice getNoticeByNid(int nid) {
+        return noticeMapper.selectByPrimaryKey(nid);
+    }
+
 }

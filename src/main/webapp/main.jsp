@@ -5,10 +5,47 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <title>main</title>
 <base target="_self">
-<link rel="stylesheet" type="text/css" href="skin/css/base.css" />
-<link rel="stylesheet" type="text/css" href="skin/css/main.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/main.css" />
 
 	<script type="application/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			//获取最新的3条通知公告
+			$.ajax({
+				url:'${pageContext.request.contextPath}/daily/getLastNotice',
+				type:'post',
+				dataType:'json',
+				success:function (data) {
+					$.each(data,function (index) {
+						var nd=new Date(data[index].ndate).toLocaleDateString();
+						var noti="<li class='ue-clear'>" +
+								"<span>"+nd+"</span>&nbsp;&nbsp;&nbsp;<a href='javascript:showWindow("+data[index].nid+")' class='notice-title'>"+data[index].ntitle+"</a>" +
+								"</li>" +
+								"<p>";
+						$("#notices").append(noti);
+					})
+				}
+			});
+		})
+
+		//点击通知公告后弹出窗口，显示具体的内容
+		function showWindow(nid) {
+			$("#showdiv").css("display","block");
+			$.ajax({
+				url:'${pageContext.request.contextPath}/daily/getNoticeByNid?nid='+nid,
+				type:'post',
+				dataType:'json',
+				success:function (data) {
+					$("#ntitle").html(data.ntitle);
+					$("#content").html(data.remark);
+				}
+			});
+		}
+		function closeWindow() {
+			$("#showdiv").css("display","none");
+		}
+	</script>
 	
 </head>
 <body leftmargin="8" topmargin='8'>
@@ -39,14 +76,14 @@
 		cellspacing="0">
 		<tr>
 			<td><div style='float: left'>
-					<img height="14" src="skin/images/frame/book1.gif" width="20" />&nbsp;欢迎使用项目平台管理系统
+					<img height="14" src="${pageContext.request.contextPath}/skin/images/frame/book1.gif" width="20" />&nbsp;欢迎使用项目平台管理系统
 				</div>
 				<div style='float: right; padding-right: 8px;'>
 					<!--  //保留接口  -->
 				</div></td>
 		</tr>
 		<tr>
-			<td height="1" background="skin/images/frame/sp_bg.gif"
+			<td height="1" background="${pageContext.request.contextPath}/skin/images/frame/sp_bg.gif"
 				style='padding: 0px'></td>
 		</tr>
 	</table>
@@ -54,7 +91,7 @@
     <table width="98%" align="center" border="0" cellpadding="4"
 		cellspacing="1" bgcolor="#CBD8AC" style="margin-bottom: 8px">
 		<tr>
-			<td colspan="2" background="skin/images/frame/wbg.gif"
+			<td colspan="2" background="${pageContext.request.contextPath}/skin/images/frame/wbg.gif"
 				bgcolor="#EEF4EA" class='title'>
 				<div style='float: left'>
 					<span>快捷操作</span>
@@ -67,10 +104,10 @@
 					width="100%" border="0" cellspacing="1" cellpadding="1">
 					<tr>
 						<td width="15%" height="31" align="center"><img
-							src="skin/images/frame/qc.gif" width="90" height="30" /></td>
+							src="${pageContext.request.contextPath}/skin/images/frame/qc.gif" width="90" height="30" /></td>
 						<td width="85%" valign="bottom"><div class='icoitem'>
 								<div class='ico'>
-									<img src='skin/images/frame/addnews.gif' width='16' height='16' />
+									<img src='${pageContext.request.contextPath}/skin/images/frame/addnews.gif' width='16' height='16' />
 								</div>
 								<div class='txt'>
 									<a href='project-base.html'><u>查看项目信息</u></a>
@@ -78,7 +115,7 @@
 							</div>
 							<div class='icoitem'>
 								<div class='ico'>
-									<img src='skin/images/frame/menuarrow.gif' width='16'
+									<img src='${pageContext.request.contextPath}/skin/images/frame/menuarrow.gif' width='16'
 										height='16' />
 								</div>
 								<div class='txt'>
@@ -87,7 +124,7 @@
 							</div>
 							<div class='icoitem'>
 								<div class='ico'>
-									<img src='skin/images/frame/manage1.gif' width='16' height='16' />
+									<img src='${pageContext.request.contextPath}/skin/images/frame/manage1.gif' width='16' height='16' />
 								</div>
 								<div class='txt'>
 									<a href='forum-showmyself.jsp'><u>我的帖子</u></a>
@@ -95,7 +132,7 @@
 							</div>
 							<div class='icoitem'>
 								<div class='ico'>
-									<img src='skin/images/frame/file_dir.gif' width='16'
+									<img src='${pageContext.request.contextPath}/skin/images/frame/file_dir.gif' width='16'
 										height='16' />
 								</div>
 								<div class='txt'>
@@ -104,7 +141,7 @@
 							</div>
 							<div class='icoitem'>
 								<div class='ico'>
-									<img src='skin/images/frame/part-index.gif' width='16'
+									<img src='${pageContext.request.contextPath}/skin/images/frame/part-index.gif' width='16'
 										height='16' />
 								</div>
 								<div class='txt'>
@@ -113,7 +150,7 @@
 							</div>
 							<div class='icoitem'>
 								<div class='ico'>
-									<img src='skin/images/frame/manage1.gif' width='16' height='16' />
+									<img src='${pageContext.request.contextPath}/skin/images/frame/manage1.gif' width='16' height='16' />
 								</div>
 								<div class='txt'>
 									<a href='modpassword.html'><u>修改密码</u></a>
@@ -130,7 +167,7 @@
 		cellspacing="1" bgcolor="#CBD8AC"
 		style="margin-bottom: 8px; margin-top: 8px;">
 		<tr>
-			<td background="skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
+			<td background="${pageContext.request.contextPath}/skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
 				class='title'><span>待完成任务</span></td>
 		</tr>
 		<tr bgcolor="#FFFFFF">
@@ -145,7 +182,7 @@
 		cellspacing="1" bgcolor="#CBD8AC"
 		style="margin-bottom: 8px; margin-top: 8px;">
 		<tr>
-			<td background="skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
+			<td background="${pageContext.request.contextPath}/skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
 				class='title'><span>未读消息</span></td>
 		</tr>
 		<tr bgcolor="#FFFFFF">
@@ -162,8 +199,8 @@
 		cellspacing="1" bgcolor="#CBD8AC"
 		style="margin-bottom: 8px; margin-top: 8px;">
 		<tr>
-			<td background="skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
-				class='title'><span>通知公告</span><a href='#' style='padding-left: 1260px'>查看更多...</a></td>
+			<td background="${pageContext.request.contextPath}/skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
+				class='title'><span>通知公告</span><a href='#' style='padding-left: 860px'>查看更多...</a></td>
 		</tr>
 		<tr bgcolor="#FFFFFF">
 			<td>
@@ -187,9 +224,9 @@
 		cellspacing="1" bgcolor="#CBD8AC"
 		style="margin-bottom: 8px; margin-top: 8px;">
 		<tr>
-			<td colspan="3" background="skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
+			<td colspan="3" background="${pageContext.request.contextPath}/skin/images/frame/wbg.gif" bgcolor="#EEF4EA"
 				class='title'>
-				<span>员工论坛</span><a href='forum.jsp' style='padding-left: 1260px'>查看更多...</a>
+				<span>员工论坛</span><a href='forum.jsp' style='padding-left: 860px'>查看更多...</a>
 			</td>
 		</tr>
 

@@ -1,5 +1,6 @@
 package com.offcn.dao.daily;
 
+import com.offcn.beans.daily.Notice;
 import com.offcn.beans.daily.Task;
 import com.offcn.beans.daily.TaskExample;
 import java.util.List;
@@ -34,4 +35,5 @@ public interface TaskMapper {
     List<TaskView> getTasklist(Map map);
 
     List<TaskView> getMyTaskList(Map map);
+
 }

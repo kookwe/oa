@@ -1,9 +1,11 @@
 package com.offcn.service.daily;
 
 import com.github.pagehelper.PageInfo;
+import com.offcn.beans.daily.Notice;
 import com.offcn.beans.daily.Task;
 import com.offcn.beans.daily.TaskView;
 
+import java.util.List;
 import java.util.Map;
 
 public interface DailyService {
@@ -19,4 +21,8 @@ public interface DailyService {
     PageInfo<TaskView> getMyTaskPage(int pageNum, Map map);
 
     int updateStatus(int st, int tid);
+
+    List<Notice> getLastNotice();
+
+    Notice getNoticeByNid(int nid);
 }

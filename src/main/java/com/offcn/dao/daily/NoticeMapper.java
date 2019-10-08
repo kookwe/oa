@@ -27,4 +27,7 @@ public interface NoticeMapper {
     int updateByPrimaryKeySelective(Notice record);
 
     int updateByPrimaryKey(Notice record);
+
+    //获得最近的三条消息
+    List<Notice> getLastNotice();
 }

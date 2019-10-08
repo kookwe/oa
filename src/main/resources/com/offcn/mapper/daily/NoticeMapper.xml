@@ -7,6 +7,11 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="ndate" jdbcType="DATE" property="ndate" />
   </resultMap>
+<!--  获得最近的三条消息-->
+  <select id="getLastNotice" resultMap="BaseResultMap">
+    select * from notice order by ndate desc limit 3
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

@@ -1,6 +1,7 @@
 package com.offcn.controller.daily;
 
 import com.github.pagehelper.PageInfo;
+import com.offcn.beans.daily.Notice;
 import com.offcn.beans.daily.Task;
 import com.offcn.beans.daily.TaskView;
 import com.offcn.beans.employee.Employee;
@@ -13,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -107,9 +110,27 @@ public class DailyController {
         return "task-my";
     }
 
+    /**
+     * 更新任务状态，已完成、进行中
+     * @param st
+     * @param tid
+     * @return
+     */
     @RequestMapping("updateStatus")
     public String updateStatus(int st,int tid){
         dailyService.updateStatus(st,tid);
         return "redirect:/daily/getMyTaskList";
+    }
+
+    @RequestMapping("getLastNotice")
+    @ResponseBody
+    public List<Notice> getLastNotice(){
+        return dailyService.getLastNotice();
+    }
+
+    @RequestMapping("getNoticeByNid")
+    @ResponseBody
+    public Notice getNoticeByNid(int nid){
+        return dailyService.getNoticeByNid(nid);
     }
 }
