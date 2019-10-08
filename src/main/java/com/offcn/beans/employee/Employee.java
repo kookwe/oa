@@ -1,5 +1,8 @@
 package com.offcn.beans.employee;
 
+import com.offcn.beans.daily.Archives;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Employee {
@@ -12,7 +15,7 @@ public class Employee {
     private Integer eage;
 
     private String telephone;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hiredate;
 
     private String pnum;
@@ -29,6 +32,45 @@ public class Employee {
 
     private Integer lFk;
 
+    private Dept dept;
+
+    private Position position;
+
+    private Level level;
+
+    private Archives archives;
+
+    public Dept getDept() {
+        return dept;
+    }
+
+    public void setDept(Dept dept) {
+        this.dept = dept;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Archives getArchives() {
+        return archives;
+    }
+
+    public void setArchives(Archives archives) {
+        this.archives = archives;
+    }
 
     public Integer getEid() {
         return eid;

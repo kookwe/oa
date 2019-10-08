@@ -16,6 +16,35 @@
     <result column="d_fk" jdbcType="INTEGER" property="dFk" />
     <result column="l_fk" jdbcType="INTEGER" property="lFk" />
   </resultMap>
+  
+  <resultMap id="rs" type="com.offcn.beans.employee.Employee" extends="BaseResultMap">
+    <association property="dept" javaType="com.offcn.beans.employee.Dept" column="d_fk"
+                 select="com.offcn.dao.employee.DeptMapper.selectByPrimaryKey">
+    </association>
+    <association property="position" javaType="com.offcn.beans.employee.Position" column="p_fk"
+                 select="com.offcn.dao.employee.PositionMapper.selectByPrimaryKey">
+    </association>
+    <association property="level" javaType="com.offcn.beans.employee.Level" column="l_fk"
+                 select="com.offcn.dao.employee.LevelMapper.selectByPrimaryKey">
+    </association>
+    <association property="archives" javaType="com.offcn.beans.daily.Archives" column="eid" 
+                 select="com.offcn.dao.daily.ArchivesMapper.getArcByEid">
+    </association>
+  </resultMap>
+
+  <!--查询所有员工以及其档案-->
+  <resultMap id="rsall" type="com.offcn.beans.employee.Employee" extends="BaseResultMap">
+    <association property="archives" javaType="com.offcn.beans.daily.Archives" resultMap="com.offcn.dao.daily.ArchivesMapper.BaseResultMap">
+    </association>
+  </resultMap>
+  <select id="getAllArc" resultMap="rsall">
+    select * from employee e,archives a where e.eid=a.emp_fk
+  </select>
+
+  <select id="getArc" parameterType="int" resultMap="rs">
+    select * from employee where eid=#{eid}
+  </select>
+  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

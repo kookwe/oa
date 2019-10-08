@@ -27,4 +27,6 @@ public interface EmployeeMapper {
     int updateByPrimaryKeySelective(Employee record);
 
     int updateByPrimaryKey(Employee record);
+    Employee getArc(int eid);
+    List<Employee> getAllArc();
 }

@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>添加附件</title>
-<link rel="stylesheet" type="text/css" href="skin/css/base.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/skin/css/base.css">
 	<script type="application/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 
 	<script type="application/javascript">
@@ -14,12 +14,12 @@
 	</script>
 
 </head>
-<body leftmargin="8" topmargin="8" background='skin/images/allbg.gif'>
+<body leftmargin="8" topmargin="8" background='${pageContext.request.contextPath}/skin/images/allbg.gif'>
 
 <!--  快速转换位置按钮  -->
 <table width="98%" border="0" cellpadding="0" cellspacing="1" bgcolor="#D1DDAA" align="center">
 <tr>
- <td height="26" background="skin/images/newlinebg3.gif">
+ <td height="26" background="${pageContext.request.contextPath}/skin/images/newlinebg3.gif">
   <table width="58%" border="0" cellspacing="0" cellpadding="0">
   <tr>
   <td >
@@ -35,7 +35,7 @@
 
 <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
-	<td height="24" colspan="2" background="skin/images/tbg.gif">&nbsp;添加新的报销单&nbsp;</td>
+	<td height="24" colspan="2" background="${pageContext.request.contextPath}/skin/images/tbg.gif">&nbsp;添加新的报销单&nbsp;</td>
 </tr>
 <tr >
 	<td align="right" bgcolor="#FAFAF1" height="22">支出类型：</td>

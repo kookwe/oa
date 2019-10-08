@@ -27,4 +27,6 @@ public interface ArchivesMapper {
     int updateByPrimaryKeySelective(Archives record);
 
     int updateByPrimaryKey(Archives record);
+
+    Archives getArcByEid(int eid);
 }

@@ -34,4 +34,12 @@ public class EmployeeController {
     public List<Employee> getEmps(){
         return employeeService.getEmpsByPos();
     }
+
+    @RequestMapping("getOrtherEmps")
+    @ResponseBody
+    public List<Employee> getOrtherEmps(HttpSession session){
+        Employee emp = (Employee) session.getAttribute("emp");
+        List<Employee> list = employeeService.getOrtherEmps(emp.getEid());
+        return list;
+    }
 }
