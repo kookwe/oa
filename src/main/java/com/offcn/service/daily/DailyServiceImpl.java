@@ -2,10 +2,8 @@ package com.offcn.service.daily;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.offcn.beans.daily.Notice;
-import com.offcn.beans.daily.Task;
-import com.offcn.beans.daily.TaskExample;
-import com.offcn.beans.daily.TaskView;
+import com.offcn.beans.daily.*;
+import com.offcn.dao.daily.BaoxiaoMapper;
 import com.offcn.dao.daily.NoticeMapper;
 import com.offcn.dao.daily.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,9 @@ public class DailyServiceImpl implements DailyService {
     TaskMapper taskMapper;
     @Autowired
     NoticeMapper noticeMapper;
+    @Autowired
+    BaoxiaoMapper baoxiaoMapper;
+
     @Override
     public int addTask(Task task) {
 
@@ -69,6 +70,37 @@ public class DailyServiceImpl implements DailyService {
     @Override
     public Notice getNoticeByNid(int nid) {
         return noticeMapper.selectByPrimaryKey(nid);
+    }
+
+    @Override
+    public int saveBaoxiao(Baoxiao bx) {
+        return baoxiaoMapper.insertSelective(bx);
+    }
+
+    @Override
+    public PageInfo<BaoXiaoView> getBaoList(int pageNum, int flag) {
+        PageHelper.startPage(pageNum, 2);
+        List<BaoXiaoView> bxlist = baoxiaoMapper.getBxlist(flag);
+        PageInfo<BaoXiaoView> info = new PageInfo<>(bxlist);
+        return info;
+    }
+
+    @Override
+    public Baoxiao getBxByBxid(String bxid) {
+        return baoxiaoMapper.selectByPrimaryKey(bxid);
+    }
+
+    @Override
+    public int updateBXstatus(Baoxiao baoxiao) {
+        return baoxiaoMapper.updateByPrimaryKeySelective(baoxiao);
+    }
+
+    @Override
+    public List<Baoxiao> getMyBxList(Integer eid) {
+        BaoxiaoExample example = new BaoxiaoExample();
+        BaoxiaoExample.Criteria criteria = example.createCriteria();
+        criteria.andEmpFkEqualTo(eid);
+        return baoxiaoMapper.selectByExample(example);
     }
 
 }

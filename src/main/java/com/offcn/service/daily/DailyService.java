@@ -1,9 +1,7 @@
 package com.offcn.service.daily;
 
 import com.github.pagehelper.PageInfo;
-import com.offcn.beans.daily.Notice;
-import com.offcn.beans.daily.Task;
-import com.offcn.beans.daily.TaskView;
+import com.offcn.beans.daily.*;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +23,14 @@ public interface DailyService {
     List<Notice> getLastNotice();
 
     Notice getNoticeByNid(int nid);
+
+    int saveBaoxiao(Baoxiao bx);
+
+    PageInfo<BaoXiaoView> getBaoList(int pageNum, int flag);
+
+    Baoxiao getBxByBxid(String bxid);
+
+    int updateBXstatus(Baoxiao baoxiao);
+
+    List<Baoxiao> getMyBxList(Integer eid);
 }

@@ -40,8 +40,8 @@
 <li><a href='${pageContext.request.contextPath}/daily/getarcs' target='main'>档案管理</a> </li>
 <li><a href='${pageContext.request.contextPath}/daily/getmyarc' target='main'>我的档案</a> </li>
 <li><a href='message-give.jsp' target='main'>消息推送</a> </li>
-<li><a href='baoxiao/udobaoxiao' target='main'>报销审批</a> </li>
-<li><a href='${pageContext.request.contextPath}/daily/mybaoxiao' target='main'>我的报销</a> </li>
+<li><a href='${pageContext.request.contextPath}/daily/getbxlist' target='main'>报销审批</a> </li>
+<li><a href='${pageContext.request.contextPath}/daily/getMyBxList' target='main'>我的报销</a> </li>
 </ul></dd></dl>
 
 <dl class='bitem'><dt onclick=showHide("items3_1")><b>信息箱</b></dt><dd style='display:none' class='sitem' id=items3_1><ul class='sitemu' id=2>

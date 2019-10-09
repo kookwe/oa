@@ -1,5 +1,7 @@
 package com.offcn.beans.daily;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Baoxiao {
@@ -8,10 +10,12 @@ public class Baoxiao {
     private String paymode;
 
     private Double totalmoney;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date bxtime;
 
     private String bxremark;
+
+    private String remark;
 
     private Integer bxstatus;
 
@@ -57,6 +61,14 @@ public class Baoxiao {
 
     public void setBxremark(String bxremark) {
         this.bxremark = bxremark == null ? null : bxremark.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     public Integer getBxstatus() {
