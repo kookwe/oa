@@ -3,10 +3,12 @@ package com.offcn.dao.daily;
 import com.offcn.beans.daily.Baoxiao;
 import com.offcn.beans.daily.BaoxiaoExample;
 import java.util.List;
+
+import com.offcn.beans.daily.BaoXiaoView;
 import org.apache.ibatis.annotations.Param;
 
 public interface BaoxiaoMapper {
-    long countByExample(BaoxiaoExample example);
+    int countByExample(BaoxiaoExample example);
 
     int deleteByExample(BaoxiaoExample example);
 
@@ -27,4 +29,6 @@ public interface BaoxiaoMapper {
     int updateByPrimaryKeySelective(Baoxiao record);
 
     int updateByPrimaryKey(Baoxiao record);
+
+    List<BaoXiaoView> getBxlist(int flag);
 }
