@@ -292,16 +292,28 @@ public class DailyController {
     }
     //根据报销id获取报销对象
     @RequestMapping("getBxByBxid")
-    public String getBxByBxid(Model model,String bxid){
+    public String getBxByBxid(Model model,String bxid,@RequestParam(defaultValue = "0") int flag){
         Baoxiao baoxiao = dailyService.getBxByBxid(bxid);
         model.addAttribute("baoxiao", baoxiao);
-        return "baoxiao-task-edit";
+        if(flag==0){
+            //审批编辑页面
+            return "baoxiao-task-edit";
+        }else {
+            //用户自己编辑页面
+            return "mybaoxiao-edit";
+        }
+
     }
     //改变报销审批的状态，同意1 驳回2
     @RequestMapping("updateBXstatus")
     public String updateBXstatus(Baoxiao baoxiao){
         dailyService.updateBXstatus(baoxiao);
-        return "redirect:/daily/getbxlist";
+        if (baoxiao.getBxstatus()==0){
+            return "redirect:/daily/getMyBxList";
+        }else {
+            return "redirect:/daily/getbxlist";
+        }
+
     }
 
     //获取我的报销列表

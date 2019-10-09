@@ -56,7 +56,7 @@
 
                 <c:if test="${bx.bxstatus == 0}">
                     <td>未审批</td>
-                    <td><a href="mybaoxiao-edit.jsp?bxid=${bx.bxid}">编辑</a></td>
+                    <td><a href="${pageContext.request.contextPath}/daily/getBxByBxid?bxid=${bx.bxid}&flag=1">编辑</a></td>
                 </c:if>
                 <c:if test="${bx.bxstatus == 1}">
                     <td>审批通过</td>
@@ -64,7 +64,7 @@
                 </c:if>
                 <c:if test="${bx.bxstatus == 2}">
                     <td>驳回</td>
-                    <td><a href="mybaoxiao-edit.jsp?bxid=${bx.bxid}">编辑</a></td>
+                    <td><a href="${pageContext.request.contextPath}/daily/getBxByBxid?bxid=${bx.bxid}&flag=1">编辑</a></td>
                 </c:if>
                 <c:if test="${bx.bxstatus == 3}">
                     <td>审批并付款</td>
