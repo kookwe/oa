@@ -19,7 +19,7 @@
                         当前位置:个人报销管理>>报销列表
                     </td>
                     <td>
-                        <input type='button' class="coolbg np" onClick="location='mybaoxiao-add.jsp';" value='添加报销'/>
+                        <input type='button' class="coolbg np" onClick="location='${pageContext.request.contextPath}/mybaoxiao-add.jsp';" value='添加报销'/>
                     </td>
                 </tr>
             </table>

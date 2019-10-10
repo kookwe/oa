@@ -70,7 +70,7 @@
 
 <div>
 
-<form name="form2" action="${pageContext.request.contextPath}/eval/add" id="form15" method="post">
+<form name="form2" action="${pageContext.request.contextPath}/info/addEvl" id="form15" method="post">
 
 <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
@@ -82,17 +82,19 @@
 					<img src='${pageContext.request.contextPath}/images/tx.png' height='50px' width='50px'/>
 				</span>
 		</td>
-		<td  align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-			<input type="hidden" value="${fe.forumid}" name="forumid">
-			<input type="hidden" value="" name="evaidFk" id="fk">
-               <span>发布人：</span><br>
-				<span>发布时间：</span><br>
-				<span>标题：</span>
-				<span>内容：</span>
-		</td>
+	<td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
+		onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
+		<input type="hidden" value="${form.forumid}" name="forumFk">
+		<input type="hidden" value="" name="evaidFk" id="fk">
+		<span>发布人：${form.emp.ename}</span><br>
+		<span>发布时间：<fmt:formatDate value="${form.createtime}" pattern="yyyy-MM-dd"></fmt:formatDate></span><br>
+		<span>标题：${form.forumtitle}</span>
+		<span>内容：${form.forumcontent}</span>
+	</td>
 </tr>
 
 
+	<c:forEach items="${form.elist}" var="fire">
 		<tr>
 			<td align="right" bgcolor="#FAFAF1" height="22">
 					<span>
@@ -101,27 +103,29 @@
 			</td>
 			<td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
 				onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-				<span>评论人：lll</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span>评论时间：2019-09-09 </span><br>
-				<span>评论内容：你还好吗</span>
-				&nbsp;<span><a href="">【回复】</a></span>
+				<span>评论人：${fire.emp.ename}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>评论时间：<fmt:formatDate value="${fire.evatime}" pattern="yyyy-MM-dd"></fmt:formatDate></span><br>
+				<span>评论内容：${fire.evacontent}</span>
+				&nbsp;<span><a href="javascript:reply(${fire.evaid})">【回复】</a></span>
 			</td>
 		</tr>
 
-				<tr>
-					<td align="right" bgcolor="#FAFAF1" height="22">
+		<c:forEach items="${fire.elist}" var="sece">
+			<tr>
+				<td align="right" bgcolor="#FAFAF1" height="22">
 					<span>
 						<img src='${pageContext.request.contextPath}/images/tx.png' height='50px' width='50px'/>
 					</span>
-					</td>
-					<td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
-						onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-						<span>AAA回复了BBBB</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span>回复时间：</span><br>
-						<span>回复内容：</span>
-					</td>
-				</tr>
-	
+				</td>
+				<td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
+					onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
+					<span>${sece.emp.ename}回复了${fire.emp.ename}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span>回复时间：<fmt:formatDate value="${sece.evatime}" pattern="yyyy-MM-dd"></fmt:formatDate></span><br>
+					<span>回复内容：${sece.evacontent}</span>
+				</td>
+			</tr>
+		</c:forEach>
+	</c:forEach>
 
 	<tr >
 	<td align="right" bgcolor="#FAFAF1" height="22">我也说两句：</td>

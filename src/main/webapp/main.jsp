@@ -27,6 +27,36 @@
 					})
 				}
 			});
+
+			//异步获取最新的九条公告
+			$.ajax({
+				url:'${pageContext.request.contextPath}/info/getFoms',
+				type:'post',
+				dataType:'json',
+				success:function (data) {
+					var fomcon="";
+					$.each(data,function (index) {
+						if(index%3==0){
+							fomcon+="<tr bgcolor='#FFFFFF'>";
+						}
+						var ndate=new Date(data[index].createtime);
+						fomcon+="<td>" +
+								"<ul class=\"notice-list\">" +
+								" <li class=\"ue-clear\">" +
+								"<span><img src='${pageContext.request.contextPath}/images/tx.png' height=\"50px\"" +
+								"width=\"50px\"/></span> 发布时间：" +ndate.toLocaleDateString()+
+								"<a href='${pageContext.request.contextPath}/info/getFom?fid="+data[index].forumid+"' class='notice-title'>"+data[index].forumtitle+"</a>" +
+								"</li>" +
+								"</ul>" +
+								"</td>";
+						if(index%3==2){
+							fomcon+="</tr>";
+						}
+					})
+					$("#tb").append(fomcon);
+				}
+			});
+
 		})
 
 		//点击通知公告后弹出窗口，显示具体的内容
@@ -127,7 +157,7 @@
 									<img src='${pageContext.request.contextPath}/skin/images/frame/manage1.gif' width='16' height='16' />
 								</div>
 								<div class='txt'>
-									<a href='forum-showmyself.jsp'><u>我的帖子</u></a>
+									<a href='${pageContext.request.contextPath}/info/getMyForms'><u>我的帖子</u></a>
 								</div>
 							</div>
 							<div class='icoitem'>
@@ -220,7 +250,7 @@
 <br>
 
 
-    <table width="98%" align="center" border="0" cellpadding="3"
+    <table id="tb" width="98%" align="center" border="0" cellpadding="3"
 		cellspacing="1" bgcolor="#CBD8AC"
 		style="margin-bottom: 8px; margin-top: 8px;">
 		<tr>
@@ -228,22 +258,6 @@
 				class='title'>
 				<span>员工论坛</span><a href='forum.jsp' style='padding-left: 860px'>查看更多...</a>
 			</td>
-		</tr>
-
-		<% for(int i=0;i<12;i++){
-		    if (i % 3 == 0) {%>
-			<tr bgcolor="#FFFFFF">
-		<%}%>
-		
-		    <td>
-				<ul class="notice-list">
-					<li class="ue-clear">
-					     <span><img src="${pageContext.request.contextPath}/images/tx.png" height="50px" width="50px"/></span> 发布时间：2018-12-25
-					     <a href="role.jsp"class="notice-title">招租信息</a>						
-					</li>					
-				</ul>
-			</td>	
-		   <%} %>
 		</tr>
 
 	</table>

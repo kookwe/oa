@@ -73,8 +73,13 @@ public class DailyServiceImpl implements DailyService {
     }
 
     @Override
-    public int saveBaoxiao(Baoxiao bx) {
-        return baoxiaoMapper.insertSelective(bx);
+    public int saveBaoxiao(Baoxiao bx,int flag) {
+        if(flag!=0){
+            return baoxiaoMapper.updateByPrimaryKeySelective(bx);
+        }else {
+            return baoxiaoMapper.insertSelective(bx);
+        }
+
     }
 
     @Override

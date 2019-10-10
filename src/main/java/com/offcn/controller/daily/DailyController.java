@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -271,16 +273,18 @@ public class DailyController {
     }
 
     ///////////////////////////////////////我的报销/////////////////////////////////////////////
-    //我的报销 --> 添加报销
+    //我的报销 --> 添加报销、编辑报销保存
     @RequestMapping("saveBaoxiao")
-    public String saveBaoxiao(Baoxiao bx, HttpSession session) {
+    public String saveBaoxiao(Baoxiao bx, HttpSession session,int flag) {
         Employee emp = (Employee) session.getAttribute("emp");
-        bx.setBxid(UUID.randomUUID().toString().substring(16));
+        if(flag==0){
+            //编辑我的报销时不用设置id
+            bx.setBxid(UUID.randomUUID().toString().substring(16));
+        }
         bx.setEmpFk(emp.getEid());
         bx.setBxstatus(0);//待审批状态
-        int i = dailyService.saveBaoxiao(bx);
-        //暂时跳转到报销列表静态页面
-        return "redirect:../mybaoxiao-base.jsp";
+        int i = dailyService.saveBaoxiao(bx,flag);
+        return "redirect:/daily/getMyBxList";
     }
 
     //显示报销审批列表
@@ -313,7 +317,6 @@ public class DailyController {
         }else {
             return "redirect:/daily/getbxlist";
         }
-
     }
 
     //获取我的报销列表
@@ -323,4 +326,5 @@ public class DailyController {
         model.addAttribute("bxlist", dailyService.getMyBxList(emp.getEid()));
         return "mybaoxiao-base";
     }
+
 }

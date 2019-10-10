@@ -31,8 +31,8 @@
     </tr>
 </table>
 
-<form name="form2" id="form11" action="${pageContext.request.contextPath}/daily/updateBXstatus" method="post">
-    <input type="hidden" value="${nnbx.bxid}" id="bxid" name="bxid">
+<form name="form2" id="form11" action="${pageContext.request.contextPath}/daily/saveBaoxiao?flag=1" method="post">
+    <input type="hidden" value="${baoxiao.bxid}" id="bxid" name="bxid">
     <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center"
            style="margin-top:8px">
         <tr bgcolor="#E7E7E7">
@@ -45,17 +45,17 @@
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
 
                 <select name="paymode" id="paymode">
-                    <c:if test="${nnbx.paymode eq '出差票据'}">
+                    <c:if test="${baoxiao.paymode eq '出差票据'}">
                         <option value="出差票据" selected>出差票据</option>
                         <option value="办公采购">办公采购</option>
                         <option value="其他">其他</option>
                     </c:if>
-                    <c:if test="${nnbx.paymode eq '办公采购'}">
+                    <c:if test="${baoxiao.paymode eq '办公采购'}">
                         <option value="出差票据">出差票据</option>
                         <option value="办公采购" selected>办公采购</option>
                         <option value="其他">其他</option>
                     </c:if>
-                    <c:if test="${nnbx.paymode eq '其他'}">
+                    <c:if test="${baoxiao.paymode eq '其他'}">
                         <option value="出差票据">出差票据</option>
                         <option value="办公采购">办公采购</option>
                         <option value="其他" selected>其他</option>
@@ -68,7 +68,7 @@
             <td align="right" bgcolor="#FAFAF1" height="22">总金额：</td>
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
-                <input size="26" id="totalmoney" name="totalmoney" value="${nnbx.totalmoney}"/>
+                <input size="26" id="totalmoney" name="totalmoney" value="${baoxiao.totalmoney}"/>
             </td>
         </tr>
         <tr>
@@ -76,28 +76,28 @@
             <td align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
                 <input size="52" name="bxtime" id="bxtime"
-                       value="<fmt:formatDate value="${nnbx.bxtime}" pattern="yyyy-MM-dd"></fmt:formatDate>"/>
+                       value="<fmt:formatDate value="${baoxiao.bxtime}" pattern="yyyy-MM-dd"></fmt:formatDate>"/>
             </td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1">备注：</td>
             <td colspan=3 align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';">
-                <textarea rows=10 cols=130 id="bxremark" name="bxremark">${nnbx.bxremark}</textarea>
+                <textarea rows=10 cols=130 id="bxremark" name="bxremark">${baoxiao.bxremark}</textarea>
             </td>
         </tr>
         <tr>
             <td align="right" bgcolor="#FAFAF1">批注：</td>
             <td colspan=3 align='left' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';"
                 onMouseOut="javascript:this.bgColor='#FFFFFF';">
-                <textarea rows=3 cols=130 name="result" id="pizhu" readonly="true">${nnbx.result}</textarea>
+                <textarea rows=3 cols=130 name="remark" id="pizhu" readonly="true">${baoxiao.remark}</textarea>
             </td>
         </tr>
 
         <tr bgcolor="#FAFAF1">
             <td height="28" colspan=4 align=center>
                 &nbsp;
-                <a href="javascript:commit(0)" class="coolbg">保存</a>
+                <a href="javascript:commit()" class="coolbg">保存</a>
                 <a href="project-file.jsp" class="coolbg">返回</a>
             </td>
         </tr>

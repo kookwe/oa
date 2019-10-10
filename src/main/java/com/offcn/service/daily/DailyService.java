@@ -24,7 +24,7 @@ public interface DailyService {
 
     Notice getNoticeByNid(int nid);
 
-    int saveBaoxiao(Baoxiao bx);
+    int saveBaoxiao(Baoxiao bx,int flag);
 
     PageInfo<BaoXiaoView> getBaoList(int pageNum, int flag);
 
